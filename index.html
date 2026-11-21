@@ -1,387 +1,1101 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Registro · Natillas</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#08080b">
+<meta name="robots" content="noindex">
+<title>WarMess · By Sxgura Inc</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%230a84ff'/%3E%3Cpath d='M14 16h36a3 3 0 0 1 3 3v21a3 3 0 0 1-3 3H27l-12 9V43a3 3 0 0 1-3-3V19a3 3 0 0 1 3-3z' fill='white'/%3E%3C/svg%3E">
 <style>
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-body{
-  min-height:100vh;background:#000;color:#f5f5f7;
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
-  display:flex;justify-content:center;padding:16px;
-}
-.app{width:min(100%,440px)}
-h1{font-size:24px;font-weight:800;letter-spacing:-.3px}
-.sub{font-size:13px;color:#8e8e93;margin:4px 0 14px;line-height:1.4}
+:root{--bg:#08080b;--card:#121217;--card2:#18181f;--line:#23232c;--txt:#f2f2f7;--mut:#8e8e93;--acc:#0a84ff;--acc2:#5e5ce6;--ok:#30d158;--bad:#ff453a;--warn:#ff9f0a;--vh:100dvh;--r:16px}
+[hidden]{display:none!important}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--txt);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,Helvetica,Arial,sans-serif;font-size:16px;overflow:hidden}
+button,input,textarea,select{font:inherit;color:inherit}
+button{cursor:pointer;border:0;background:none}
+.scr{display:none;position:fixed;inset:0;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.scr.on{display:block}
+#app.on{display:block;overflow:hidden}
+svg.i{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+/* ---- logo / splash ---- */
+.logo{width:76px;height:76px;border-radius:22px;background:linear-gradient(135deg,var(--acc),var(--acc2));display:grid;place-items:center;box-shadow:0 12px 40px rgba(10,132,255,.35)}
+.logo svg{width:42px;height:42px;fill:#fff}
+.brand{font-size:30px;font-weight:800;letter-spacing:-.8px;margin:14px 0 2px}
+.brand small{display:block;font-size:12.5px;font-weight:600;color:var(--mut);letter-spacing:.3px;margin-top:4px}
+#boot{display:none;align-items:center;justify-content:center;flex-direction:column;text-align:center}
+#boot.on{display:flex}
+.spin{width:22px;height:22px;border-radius:50%;border:3px solid #2a2a33;border-top-color:var(--acc);animation:sp .8s linear infinite;margin-top:22px}
+@keyframes sp{to{transform:rotate(360deg)}}
+/* ---- tarjetas de acceso ---- */
+.center{min-height:100%;display:flex;align-items:center;justify-content:center;padding:max(20px,env(safe-area-inset-top)) 18px max(20px,env(safe-area-inset-bottom));background:radial-gradient(circle at 50% -10%,rgba(10,132,255,.2),transparent 55%)}
+.box{width:100%;max-width:400px;text-align:center}
+.card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:20px;margin-top:22px;text-align:left}
+.lead{color:var(--mut);font-size:14.5px;line-height:1.45;margin:10px 4px 0}
+.tabs2{display:flex;background:#0d0d11;border:1px solid var(--line);border-radius:12px;padding:3px;margin-bottom:16px}
+.tabs2 button{flex:1;padding:9px;border-radius:9px;font-weight:600;font-size:14px;color:var(--mut)}
+.tabs2 button.on{background:#22222b;color:#fff}
+label.f{display:block;font-size:12.5px;font-weight:600;color:var(--mut);margin:12px 2px 6px}
+.in{width:100%;background:#0d0d11;border:1px solid var(--line);border-radius:13px;padding:13px 14px;font-size:16px;outline:none;transition:.15s}
+.in:focus{border-color:var(--acc);box-shadow:0 0 0 3px rgba(10,132,255,.18)}
+.btn{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;padding:13px 16px;border-radius:13px;font-weight:700;font-size:15.5px;transition:.15s;background:linear-gradient(135deg,var(--acc),#3b6cf0);color:#fff;margin-top:16px}
+.btn:active{transform:scale(.98)}
+.btn:disabled{opacity:.5;cursor:default}
+.btn.ghost{background:#1b1b23;color:#e5e5ea;border:1px solid var(--line)}
+.btn.bad{background:rgba(255,69,58,.14);color:#ff6b61;border:1px solid rgba(255,69,58,.4)}
+.btn.ok{background:rgba(48,209,88,.14);color:var(--ok);border:1px solid rgba(48,209,88,.4)}
+.btn.sm{width:auto;padding:8px 14px;font-size:13.5px;margin:0;border-radius:11px}
+.gbtn{background:#fff;color:#1f1f1f;margin-top:0}
+.or{display:flex;align-items:center;gap:10px;color:var(--mut);font-size:12.5px;margin:16px 0 4px}
+.or:before,.or:after{content:"";flex:1;height:1px;background:var(--line)}
+.msg{font-size:13.5px;margin-top:12px;min-height:0;line-height:1.4;border-radius:11px}
+.msg.err{color:#ff8a82;background:rgba(255,69,58,.1);padding:9px 12px}
+.msg.ok{color:#7be495;background:rgba(48,209,88,.1);padding:9px 12px}
+.lnk{color:var(--acc);font-weight:600;font-size:13.5px;margin-top:12px;display:inline-block}
+.fine{font-size:12px;color:var(--mut);line-height:1.5;margin-top:14px;text-align:center}
+.fine a,.fine button{color:var(--acc);text-decoration:underline;font-size:inherit}
+.chk{display:flex;gap:10px;align-items:flex-start;font-size:13.5px;color:#c7c7cc;margin-top:14px;line-height:1.4}
+.chk input{width:20px;height:20px;margin:1px 0 0;accent-color:var(--acc);flex:none}
+/* ---- avatar ---- */
+.av{width:46px;height:46px;border-radius:50%;flex:none;display:grid;place-items:center;font-weight:700;font-size:18px;color:#fff;background-size:cover;background-position:center;overflow:hidden;text-transform:uppercase}
+.av.lg{width:96px;height:96px;font-size:38px}
+.av.sm{width:36px;height:36px;font-size:14px}
+.avpick{position:relative;width:96px;height:96px;margin:0 auto 6px;cursor:pointer}
+.avpick .cam{position:absolute;right:-2px;bottom:-2px;width:32px;height:32px;border-radius:50%;background:var(--acc);display:grid;place-items:center;border:3px solid var(--card)}
+.avpick .cam svg{width:15px;height:15px}
+/* ---- app ---- */
+.shell{display:flex;height:var(--vh);width:100%;max-width:1200px;margin:0 auto;background:var(--bg)}
+.side{width:100%;display:flex;flex-direction:column;min-width:0;border-right:1px solid var(--line);background:var(--bg)}
+.main{display:none;flex:1;min-width:0;flex-direction:column;background:#0b0b0f}
+.shell.chat .side{display:none}
+.shell.chat .main{display:flex}
+@media(min-width:860px){.side{width:380px;flex:none}.main,.shell.chat .main{display:flex}.shell.chat .side{display:flex}.back{display:none!important}}
+.top{flex:none;display:flex;align-items:center;gap:10px;padding:max(12px,env(safe-area-inset-top)) 14px 10px}
+.top h1{font-size:23px;font-weight:800;letter-spacing:-.6px;margin:0;flex:1}
+.top h1 small{font-size:11px;font-weight:600;color:var(--mut);letter-spacing:.2px;margin-left:6px}
+.ibtn{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:#17171d;color:#d1d1d6;position:relative;flex:none}
+.ibtn:active{background:#22222b}
+.ibtn .dot{position:absolute;top:3px;right:3px;min-width:17px;height:17px;border-radius:9px;background:var(--bad);color:#fff;font-size:11px;font-weight:700;display:grid;place-items:center;padding:0 4px}
+.srch{flex:none;padding:0 14px 8px;position:relative}
+.srch input{width:100%;background:#15151b;border:1px solid var(--line);border-radius:14px;padding:11px 14px 11px 40px;font-size:15.5px;outline:none}
+.srch input:focus{border-color:var(--acc)}
+.srch svg{position:absolute;left:27px;top:11px;width:19px;height:19px;color:var(--mut)}
+.ptabs{flex:none;display:flex;gap:6px;padding:2px 14px 8px}
+.ptabs button{padding:7px 15px;border-radius:999px;background:#15151b;border:1px solid var(--line);color:var(--mut);font-weight:600;font-size:13.5px;display:flex;gap:6px;align-items:center}
+.ptabs button.on{background:rgba(10,132,255,.15);border-color:rgba(10,132,255,.5);color:#64b5ff}
+.ptabs b{background:var(--bad);color:#fff;border-radius:9px;font-size:11px;padding:1px 6px}
+.list{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+.row{display:flex;gap:12px;align-items:center;padding:10px 14px;cursor:pointer;border-bottom:1px solid #121217;width:100%;text-align:left}
+.row:active,.row.sel{background:#14141a}
+.row .mid{flex:1;min-width:0}
+.row .nm{font-weight:650;font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.row .sub{font-size:14px;color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
+.row .sub.un{color:#e5e5ea;font-weight:600}
+.row .meta{display:flex;flex-direction:column;align-items:flex-end;gap:6px;font-size:12px;color:var(--mut);flex:none}
+.row .unr{width:11px;height:11px;border-radius:50%;background:var(--acc)}
+.empty{padding:46px 26px;text-align:center;color:var(--mut);font-size:14.5px;line-height:1.5}
+.empty .big{font-size:40px;margin-bottom:8px}
+.hint{padding:8px 16px;font-size:12.5px;color:var(--mut)}
+.req{padding:12px 14px;border-bottom:1px solid #121217}
+.req .rq{display:flex;gap:12px;align-items:center}
+.req .q{margin:8px 0 0 58px;font-size:14px;color:#d1d1d6;background:#15151b;border-radius:12px;padding:8px 12px;overflow-wrap:anywhere}
+.req .acts{display:flex;gap:8px;margin:10px 0 0 58px}
+/* ---- chat ---- */
+.mh{flex:none;display:flex;align-items:center;gap:10px;padding:max(10px,env(safe-area-inset-top)) 12px 10px 8px;border-bottom:1px solid var(--line);background:#0e0e13}
+.mh .who{flex:1;min-width:0;display:flex;align-items:center;gap:11px;text-align:left;cursor:pointer}
+.mh .who div{min-width:0}
+.mh .t1{font-weight:700;font-size:16.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mh .t2{font-size:12.5px;color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mh .t2.on{color:var(--ok)}
+.msgs{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;padding:12px 12px 6px;display:flex;flex-direction:column;gap:3px;background:radial-gradient(circle at 20% 10%,rgba(94,92,230,.06),transparent 50%),#0b0b0f}
+.b{max-width:80%;padding:8px 12px 6px;border-radius:18px;font-size:15.5px;line-height:1.38;white-space:pre-wrap;overflow-wrap:anywhere;position:relative;animation:bi .2s}
+@keyframes bi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.b.me{align-self:flex-end;background:linear-gradient(180deg,#2b92ff,#0a74ff);border-bottom-right-radius:5px}
+.b.him{align-self:flex-start;background:#1e1e25;border-bottom-left-radius:5px}
+.b .tm{display:flex;justify-content:flex-end;align-items:center;gap:4px;font-size:11px;opacity:.7;margin:2px 0 0 14px;float:right;position:relative;top:3px}
+.b .tm svg{width:15px;height:15px;stroke-width:2.4}
+.b .tm.rd{opacity:1;color:#bfe3ff}
+.day{align-self:center;background:#17171e;color:var(--mut);font-size:12px;font-weight:600;padding:4px 12px;border-radius:999px;margin:10px 0 6px}
+.sysm{align-self:center;max-width:88%;text-align:center;background:#17171e;color:#c7c7cc;font-size:13px;line-height:1.45;padding:9px 14px;border-radius:14px;margin:8px 0}
+.more{align-self:center;font-size:13px;color:var(--acc);padding:6px 12px}
+.comp{flex:none;display:flex;gap:8px;align-items:flex-end;padding:8px 10px max(10px,env(safe-area-inset-bottom));background:#0e0e13;border-top:1px solid var(--line)}
+.comp textarea{flex:1;min-width:0;resize:none;max-height:130px;min-height:42px;padding:10px 15px;border-radius:21px;border:1px solid #2c2c35;background:#17171d;font-size:16px;line-height:1.35;outline:none}
+.comp textarea:focus{border-color:var(--acc)}
+.comp textarea:disabled{opacity:.45}
+.send{width:42px;height:42px;border-radius:50%;background:var(--acc);color:#fff;display:grid;place-items:center;flex:none}
+.send:disabled{background:#2a2a32;color:#777}
+.lockbar{flex:none;text-align:center;padding:14px 16px max(14px,env(safe-area-inset-bottom));color:var(--mut);font-size:13.5px;background:#0e0e13;border-top:1px solid var(--line)}
+.welcome{margin:auto;text-align:center;color:var(--mut);padding:30px}
+.welcome .logo{margin:0 auto 14px;width:64px;height:64px;border-radius:19px}
+.welcome .logo svg{width:34px;height:34px}
+/* ---- hojas / modales ---- */
+.ov{position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.62);display:none;align-items:flex-end;justify-content:center;backdrop-filter:blur(3px)}
+.ov.on{display:flex}
+.sheet{width:100%;max-width:480px;max-height:92%;overflow-y:auto;background:#121217;border:1px solid var(--line);border-radius:24px 24px 0 0;padding:18px 18px max(20px,env(safe-area-inset-bottom));animation:su .28s cubic-bezier(.32,.72,0,1)}
+@keyframes su{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
+@media(min-width:600px){.ov{align-items:center}.sheet{border-radius:24px}}
+.sheet h2{margin:0 0 4px;font-size:20px;letter-spacing:-.4px;display:flex;align-items:center;gap:10px}
+.sheet h2 .ibtn{margin-left:auto}
+.kv{display:flex;justify-content:space-between;gap:14px;padding:9px 0;border-bottom:1px solid #1b1b22;font-size:14px}
+.kv span:first-child{color:var(--mut);flex:none}
+.kv span:last-child{text-align:right;overflow-wrap:anywhere}
+.idbox{display:flex;align-items:center;gap:10px;background:#0d0d11;border:1px dashed #34343f;border-radius:14px;padding:12px 14px;margin-top:10px}
+.idbox b{font-size:26px;letter-spacing:3px;font-variant-numeric:tabular-nums;flex:1}
+.idbox small{display:block;color:var(--mut);font-size:12px;letter-spacing:0}
+.toast{position:fixed;left:50%;bottom:max(24px,env(safe-area-inset-bottom));transform:translateX(-50%) translateY(20px);background:#26262f;border:1px solid #34343f;color:#fff;padding:11px 18px;border-radius:14px;font-size:14px;opacity:0;pointer-events:none;transition:.25s;z-index:200;max-width:90%;text-align:center}
+.toast.on{opacity:1;transform:translateX(-50%)}
+.legal p{font-size:14px;line-height:1.55;color:#d1d1d6;margin:8px 0}
+.legal h3{font-size:14px;margin:14px 0 2px;color:#fff}
+/* ---- admin ---- */
+.adm{position:fixed;inset:0;z-index:80;background:var(--bg);display:none;flex-direction:column}
+.adm.on{display:flex}
+.adm .top{border-bottom:1px solid var(--line)}
+.atabs{flex:none;display:flex;gap:6px;padding:10px 14px;overflow-x:auto}
+.atabs button{padding:8px 15px;border-radius:999px;background:#15151b;border:1px solid var(--line);color:var(--mut);font-weight:600;font-size:13.5px;white-space:nowrap}
+.atabs button.on{background:rgba(10,132,255,.15);border-color:rgba(10,132,255,.5);color:#64b5ff}
+.abody{flex:1;min-height:0;overflow-y:auto;padding:4px 14px 30px;max-width:900px;width:100%;margin:0 auto}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:6px}
+@media(min-width:600px){.stats{grid-template-columns:repeat(3,1fr)}}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px}
+.stat b{display:block;font-size:28px;letter-spacing:-1px}
+.stat span{font-size:12.5px;color:var(--mut)}
+.pill{display:inline-block;font-size:11.5px;font-weight:700;padding:2px 9px;border-radius:999px;margin-left:6px;vertical-align:middle}
+.pill.activo{background:rgba(48,209,88,.15);color:var(--ok)}
+.pill.suspendido{background:rgba(255,159,10,.15);color:var(--warn)}
+.pill.bloqueado,.pill.eliminado{background:rgba(255,69,58,.15);color:#ff6b61}
+.pill.nuevo{background:rgba(10,132,255,.15);color:#64b5ff}
+.pill.revisado{background:#22222b;color:var(--mut)}
+.acard{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 14px;margin-top:10px;font-size:14px;line-height:1.5;overflow-wrap:anywhere}
+.acard h4{margin:0 0 6px;font-size:13px;color:var(--mut);text-transform:uppercase;letter-spacing:.5px}
+.acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.ml{background:#0d0d11;border-radius:10px;padding:8px 10px;font-size:13px;margin-top:6px;overflow-wrap:anywhere}
+.ml b{color:#64b5ff}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 
-.stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
-.stat{
-  background:#1c1c1e;border:1px solid #2c2c2e;border-radius:14px;padding:12px;
-}
-.stat b{display:block;font-size:18px;font-weight:800;margin-bottom:2px}
-.stat span{font-size:11px;color:#8e8e93}
-.stat.blue b{color:#0a84ff}
-.stat.orange b{color:#ff9f0a}
-.stat.green b{color:#30d158}
-.stat.purple b{color:#bf5af2}
-
-.card{
-  background:#1c1c1e;border:1px solid #2c2c2e;border-radius:18px;
-  padding:14px;margin-bottom:12px;
-}
-.card h2{font-size:15px;font-weight:700;margin-bottom:10px}
-label{display:block;font-size:11px;color:#8e8e93;font-weight:600;margin:8px 0 5px}
-input,textarea{
-  width:100%;background:#2c2c2e;border:1px solid #2c2c2e;color:#fff;
-  border-radius:12px;padding:12px;font-size:15px;outline:none;
-}
-input:focus,textarea:focus{border-color:#0a84ff}
-textarea{min-height:60px;resize:vertical}
-.row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-
-.btn{
-  width:100%;border:none;border-radius:12px;padding:13px;margin-top:10px;
-  background:#0a84ff;color:#fff;font-size:15px;font-weight:700;cursor:pointer;
-}
-.btn.gray{background:#2c2c2e}
-.btn.red{background:#ff453a}
-.btn.small{width:auto;margin:0;padding:8px 12px;font-size:12px}
-.btn:disabled{opacity:.5}
-
-.msg{
-  display:none;margin-top:8px;padding:10px;border-radius:10px;
-  font-size:12px;text-align:center;
-}
-.msg.ok{display:block;background:rgba(48,209,88,.12);color:#30d158}
-.msg.err{display:block;background:rgba(255,69,58,.12);color:#ff453a}
-
-.search{
-  width:100%;background:#1c1c1e;border:1px solid #2c2c2e;color:#fff;
-  border-radius:12px;padding:12px;margin-bottom:12px;font-size:14px;outline:none;
-}
-
-.list{display:flex;flex-direction:column;gap:10px}
-.item{
-  background:#111113;border:1px solid #2a2a2e;border-radius:16px;padding:12px;
-}
-.top{display:flex;justify-content:space-between;align-items:center;gap:8px}
-.name{font-size:16px;font-weight:800}
-.badge{font-size:11px;font-weight:700;padding:4px 9px;border-radius:999px}
-.badge.green{background:rgba(48,209,88,.15);color:#30d158}
-.badge.orange{background:rgba(255,159,10,.15);color:#ff9f0a}
-.badge.red{background:rgba(255,69,58,.15);color:#ff453a}
-.meta{margin-top:8px;font-size:12px;color:#a1a1a6;line-height:1.55}
-.meta b{color:#fff}
-.note{margin-top:6px;font-size:12px;color:#8e8e93;font-style:italic}
-.actions{display:flex;gap:8px;margin-top:10px}
-.empty{text-align:center;color:#8e8e93;font-size:13px;padding:20px}
-.foot{text-align:center;color:#6c6c70;font-size:11px;padding:12px 0 22px}
-.price-tag{font-size:12px;color:#8e8e93;margin-bottom:8px}
-.price-tag b{color:#ffd60a}
 </style>
 </head>
 <body>
-<div class="app">
-  <h1>Registro</h1>
-  <p class="sub">Natillas · control de ventas, pagos y deudas. Precio fijo por unidad: <b style="color:#ffd60a">$2.500</b></p>
+<div class="scr on" id="boot"><div class="logo"><svg viewBox="0 0 24 24"><path d="M4 4h16a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H9l-5 4v-4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/></svg></div><div class="brand">WarMess<small>By Sxgura Inc</small></div><div class="spin"></div></div>
 
-  <div class="stats">
-    <div class="stat blue"><b id="stReparto">0</b><span>Unidades repartidas</span></div>
-    <div class="stat orange"><b id="stPorPagar">0</b><span>Unidades por pagar</span></div>
-    <div class="stat green"><b id="stCompletas">0</b><span>Vendidas / pagadas</span></div>
-    <div class="stat purple"><b id="stGanancia">$0</b><span>Ganancia (cobrado)</span></div>
-  </div>
-
+<!-- ACCESO -->
+<div class="scr" id="auth"><div class="center"><div class="box">
+  <div class="logo" style="margin:0 auto"><svg viewBox="0 0 24 24"><path d="M4 4h16a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H9l-5 4v-4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/></svg></div>
+  <div class="brand">WarMess<small>By Sxgura Inc</small></div>
+  <p class="lead">Para usar este servicio debes <b>registrarte</b>. Chatea en tiempo real con otras personas usando su ID de usuario.</p>
   <div class="card">
-    <h2 id="formTitle">Nueva venta</h2>
-    <p class="price-tag">Cada natilla = <b>$2.500</b></p>
-    <input type="hidden" id="editId" value="">
-
-    <label>Nombre</label>
-    <input id="nombre" placeholder="Ej. Iván" autocomplete="off">
-
-    <div class="row">
-      <div>
-        <label>Unidades</label>
-        <input id="unidades" type="number" min="0" step="1" placeholder="5" inputmode="numeric">
-      </div>
-      <div>
-        <label>Total pedido</label>
-        <input id="totalView" type="text" value="$0" readonly style="opacity:.85">
-      </div>
-    </div>
-
-    <div class="row">
-      <div>
-        <label>Pagó</label>
-        <input id="pago" type="number" min="0" step="100" placeholder="0" inputmode="numeric">
-      </div>
-      <div>
-        <label>Debe</label>
-        <input id="debe" type="number" min="0" step="100" placeholder="0" inputmode="numeric">
-      </div>
-    </div>
-
-    <label>Nota (opcional)</label>
-    <textarea id="nota" placeholder="Ej. pagó una y media..."></textarea>
-
-    <button class="btn" id="btnSave" type="button">Guardar registro</button>
-    <button class="btn gray" id="btnCancel" type="button" style="display:none">Cancelar</button>
-    <div class="msg" id="msg"></div>
+    <button class="btn gbtn" data-act="google" id="gBtn"><svg width="20" height="20" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.9 2.4 30.4 0 24 0 14.6 0 6.5 5.4 2.6 13.2l7.9 6.1C12.4 13.6 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.5 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.7c-.6 3-2.3 5.5-4.8 7.2l7.6 5.9c4.4-4.1 7-10.1 7-17.6z"/><path fill="#FBBC05" d="M10.5 28.7a14.5 14.5 0 0 1 0-9.4l-7.9-6.1a24 24 0 0 0 0 21.6l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.6-5.9c-2.1 1.4-4.9 2.3-8.3 2.3-6.3 0-11.6-4.1-13.5-9.8l-7.9 6.1C6.5 42.6 14.6 48 24 48z"/></svg>Continuar con Google</button>
+    <div class="or">o con tu correo</div>
+    <div class="tabs2"><button class="on" data-act="amode" data-m="in">Entrar</button><button data-act="amode" data-m="up">Crear cuenta</button></div>
+    <form id="aForm" autocomplete="on" novalidate>
+      <label class="f" for="aEm">Correo electrónico</label>
+      <input class="in" id="aEm" type="email" autocomplete="email" inputmode="email" placeholder="tu@correo.com" maxlength="120">
+      <label class="f" for="aPw">Contraseña</label>
+      <input class="in" id="aPw" type="password" autocomplete="current-password" placeholder="Mínimo 6 caracteres" maxlength="100">
+      <div id="aPw2w" hidden><label class="f" for="aPw2">Repite la contraseña</label><input class="in" id="aPw2" type="password" autocomplete="new-password" placeholder="Repite tu contraseña" maxlength="100"></div>
+      <button class="btn" id="aGo" type="submit">Entrar</button>
+    </form>
+    <div class="msg" id="aMsg"></div>
+    <div style="text-align:center"><button class="lnk" data-act="forgot" id="aForgot">¿Olvidaste tu contraseña?</button></div>
   </div>
+  <p class="fine">Al continuar aceptas las <button data-act="legal">normas de uso y privacidad</button>.</p>
+</div></div></div>
 
-  <input class="search" id="search" placeholder="Buscar por nombre...">
-  <div class="list" id="list"></div>
-  <div class="foot">Registro Natillas · datos guardados en este dispositivo</div>
+<!-- VERIFICAR CORREO -->
+<div class="scr" id="verify"><div class="center"><div class="box">
+  <div class="logo" style="margin:0 auto;background:linear-gradient(135deg,#ff9f0a,#ff6b35)"><svg viewBox="0 0 24 24"><path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm1.6 2L12 12.6 19.4 7z"/></svg></div>
+  <div class="brand" style="font-size:24px">Verifica tu correo</div>
+  <p class="lead">Te enviamos un enlace a <b id="vEm"></b>. Ábrelo y vuelve aquí: se actualiza solo. Revisa también la carpeta de spam.</p>
+  <div class="card">
+    <button class="btn" data-act="vcheck" id="vCheck">Ya lo verifiqué</button>
+    <button class="btn ghost" data-act="vresend" id="vResend">Reenviar correo</button>
+    <div class="msg" id="vMsg"></div>
+    <div style="text-align:center"><button class="lnk" data-act="logout">Cerrar sesión</button></div>
+  </div>
+</div></div></div>
+
+<!-- CREAR PERFIL -->
+<div class="scr" id="onb"><div class="center"><div class="box">
+  <div class="brand" style="font-size:25px;margin-top:0">Crea tu perfil</div>
+  <p class="lead">Así te verán las demás personas. Después de crearlo recibirás tu <b>ID de usuario</b>.</p>
+  <div class="card">
+    <div class="avpick" data-act="pickAv" data-t="onb"><div class="av lg" id="onbAv">?</div><div class="cam"><svg class="i" viewBox="0 0 24 24"><path d="M4 8h3l2-2h6l2 2h3v11H4zM12 17a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/></svg></div></div>
+    <label class="f" for="onbNm">Nombre o cómo quieres que te llamen</label>
+    <input class="in" id="onbNm" maxlength="40" placeholder="Tu nombre" autocomplete="nickname">
+    <label class="f" for="onbBd">Fecha de nacimiento</label>
+    <input class="in" id="onbBd" type="date" autocomplete="bday">
+    <label class="f" for="onbBio">Estado <span style="font-weight:400">(opcional)</span></label>
+    <input class="in" id="onbBio" maxlength="100" placeholder="Ej: Disponible">
+    <label class="chk"><input type="checkbox" id="onbOk"><span>Tengo al menos <b id="minAge">13</b> años y acepto las <button type="button" data-act="legal" style="color:var(--acc);text-decoration:underline;font-size:inherit">normas de uso y privacidad</button>.</span></label>
+    <button class="btn" data-act="onbGo" id="onbGo">Crear mi perfil</button>
+    <div class="msg" id="onbMsg"></div>
+    <div style="text-align:center"><button class="lnk" data-act="logout">Cerrar sesión</button></div>
+  </div>
+</div></div></div>
+
+<!-- CUENTA RESTRINGIDA -->
+<div class="scr" id="blocked"><div class="center"><div class="box">
+  <div class="logo" style="margin:0 auto;background:linear-gradient(135deg,#ff453a,#c4271d)"><svg viewBox="0 0 24 24"><path d="M12 2 3 6v6c0 5 3.8 9.3 9 10 5.2-.7 9-5 9-10V6zm1 13h-2v-2h2zm0-4h-2V7h2z"/></svg></div>
+  <div class="brand" style="font-size:24px" id="blkT">Cuenta restringida</div>
+  <p class="lead" id="blkP"></p>
+  <div class="card"><button class="btn" data-act="retry" style="margin-top:0">Reintentar</button><button class="btn ghost" data-act="logout">Cerrar sesión</button></div>
+</div></div></div>
+
+<!-- APP -->
+<div class="scr" id="app">
+ <div class="shell" id="shell">
+  <aside class="side">
+    <div class="top">
+      <button class="av sm" id="meAv" data-act="profile" aria-label="Mi perfil"></button>
+      <h1>WarMess<small>By Sxgura Inc</small></h1>
+      <button class="ibtn" id="admBtn" data-act="admin" aria-label="Configuración" hidden><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button>
+    </div>
+    <div class="srch"><svg class="i" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="q" type="search" inputmode="search" placeholder="Buscar un ID de usuario o un chat" autocomplete="off" maxlength="30" aria-label="Buscar"></div>
+    <div class="ptabs" id="ptabs"><button class="on" data-act="ptab" data-t="chats">Chats</button><button data-act="ptab" data-t="reqs">Solicitudes <b id="reqN" hidden>0</b></button></div>
+    <div class="list" id="list"></div>
+  </aside>
+  <main class="main" id="main"></main>
+ </div>
 </div>
 
-<script>
-(function () {
-  var PRICE = 2500;
-  var KEY = "natillas_registro_v2";
-  var data = [];
-  var filter = "";
+<!-- HOJAS -->
+<div class="ov" id="ovProf" data-close><div class="sheet" id="shProf"></div></div>
+<div class="ov" id="ovInfo" data-close><div class="sheet" id="shInfo"></div></div>
+<div class="ov" id="ovConn" data-close><div class="sheet" id="shConn"></div></div>
+<div class="ov" id="ovLegal" data-close><div class="sheet legal">
+  <h2>Normas de uso y privacidad <button class="ibtn" data-act="closeov" aria-label="Cerrar"><svg class="i" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg></button></h2>
+  <h3>Uso respetuoso</h3><p>WarMess es un servicio de mensajes entre personas. No está permitido el acoso, las amenazas, el spam, las estafas, el contenido sexual, violento o ilegal, ni hacerse pasar por otra persona. Si incumples estas normas, tu cuenta puede ser <b>suspendida, bloqueada o eliminada</b> sin previo aviso.</p>
+  <h3>Edad mínima</h3><p>Debes tener al menos <span class="minAge">13</span> años para usar el servicio.</p>
+  <h3>Datos que guardamos</h3><p>Tu correo, nombre, foto, estado y fecha de nacimiento. Además, por seguridad y para prevenir abusos, registramos datos técnicos de tus visitas: dirección IP, ubicación aproximada, dispositivo, navegador y tiempo de uso.</p>
+  <h3>Tus mensajes</h3><p>Solo los ven las dos personas del chat. Si alguien reporta una conversación, el administrador podrá ver los últimos mensajes que esa persona incluya en el reporte.</p>
+  <h3>Tu cuenta</h3><p>Puedes editar tu perfil cuando quieras y bloquear o reportar a otras personas. Para eliminar tu cuenta contáctanos por nuestros medios oficiales.</p>
+</div></div>
 
-  function $(id) { return document.getElementById(id); }
+<!-- ADMIN -->
+<div class="adm" id="adm">
+  <div class="top"><button class="ibtn" data-act="admClose" aria-label="Cerrar"><svg class="i" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></button><h1>Configuración<small>Admin</small></h1></div>
+  <div id="admGate" style="padding:30px 20px;max-width:380px;margin:0 auto;width:100%;text-align:center">
+    <div class="brand" style="font-size:22px;margin-top:20px">Verificación de administrador</div>
+    <p class="lead">Escribe tu código de acceso.</p>
+    <input class="in" id="admPin" type="password" inputmode="numeric" autocomplete="off" placeholder="Código" style="margin-top:16px;text-align:center;letter-spacing:6px;font-size:20px" maxlength="32">
+    <div class="msg" id="admMsg"></div>
+    <button class="btn" data-act="admPin">Entrar</button>
+  </div>
+  <div id="admMain" style="display:none;flex-direction:column;flex:1;min-height:0">
+    <div class="atabs" id="atabs"><button class="on" data-act="atab" data-t="res">Resumen</button><button data-act="atab" data-t="usr">Usuarios</button><button data-act="atab" data-t="vis">Visitas</button><button data-act="atab" data-t="rep">Reportes <span class="pill nuevo" id="repN" hidden>0</span></button></div>
+    <div class="abody" id="abody"></div>
+  </div>
+</div>
+<div class="ov" id="ovAdm" data-close style="z-index:90"><div class="sheet" id="shAdm"></div></div>
+<input type="file" id="avFile" accept="image/*" hidden>
+<div class="toast" id="toast" role="status"></div>
 
-  function loadData() {
-    try {
-      var raw = localStorage.getItem(KEY);
-      data = raw ? JSON.parse(raw) : [];
-      if (!Array.isArray(data)) data = [];
-    } catch (e) {
-      data = [];
-      showMsg("No se pudo leer el almacenamiento local", true);
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult,
+  createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail, signOut
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+import { getFirestore, collection, doc, getDoc, getDocs, setDoc, updateDoc, deleteDoc, addDoc, query, where, orderBy, limit,
+  onSnapshot, serverTimestamp, writeBatch, increment
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+/* ================= CONFIGURACIÓN ================= */
+const firebaseConfig = {
+  apiKey: "AIzaSyApiO7_x468L0k0u7vheUW_luEWJ41VRUQ",
+  authDomain: "sxgura-web.firebaseapp.com",
+  projectId: "sxgura-web",
+  storageBucket: "sxgura-web.firebasestorage.app",
+  messagingSenderId: "912354449131",
+  appId: "1:912354449131:web:4df2a48d6eb84223bd10ae"
+};
+const ADMIN_EMAIL = "sxgcodesms@gmail.com";                 // mismo administrador que tu web (las reglas de Firebase lo verifican en el servidor)
+const CODE_HASH = "f1ebf7c24d86648383e9ef4f96898bb5c62b9f56f75e0c6a031dcf6da4956ceb";   // mismo código de acceso de tu panel admin
+const MIN_AGE = 13;                                         // edad mínima para registrarse
+const ONLINE_MS = 100000;                                   // "en línea" si se conectó hace menos de esto
+const fbApp = initializeApp(firebaseConfig);
+const auth = getAuth(fbApp);
+const db = getFirestore(fbApp);
+
+/* ================= UTILIDADES ================= */
+const $ = (id) => document.getElementById(id);
+const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const ms = (t) => (t && typeof t.toMillis === "function") ? t.toMillis() : (typeof t === "number" ? t : 0);
+const sleep = (n) => new Promise((r) => setTimeout(r, n));
+const P = (d) => `<svg class="i" viewBox="0 0 24 24">${d}</svg>`;
+const IC = {
+  send: P('<path d="M22 2 11 13M22 2l-7 20-4-9-9-4z"/>'), back: P('<path d="M15 18l-6-6 6-6"/>'), x: P('<path d="M6 6l12 12M18 6 6 18"/>'),
+  check: P('<path d="M5 12.5l4.5 4.5L19 7.5"/>'), checks: P('<path d="M1.5 12.5l4.5 4.5L15 7.5M9.5 15.5l1.5 1.5L21 7.5"/>'), clock: P('<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>'),
+  copy: P('<rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/>')
+};
+const hue = (s) => { let h = 0; for(const c of String(s || "?")) h = (h * 31 + c.charCodeAt(0)) % 360; return h; };
+const photoOk = (f) => typeof f === "string" && f.startsWith("data:image/jpeg;base64,");   // solo se muestran fotos propias (JPEG incrustado)
+const av = (name, foto, cls = "") => {
+  const n = String(name || "?").trim();
+  return photoOk(foto) ? `<div class="av ${cls}" style="background-image:url('${esc(foto)}')"></div>`
+    : `<div class="av ${cls}" style="background:hsl(${hue(n)} 50% 38%)">${esc(Array.from(n)[0] || "?")}</div>`;
+};
+let toastT = null;
+function toast(t){ const e = $("toast"); e.textContent = t; e.classList.add("on"); clearTimeout(toastT); toastT = setTimeout(() => e.classList.remove("on"), 3200); }
+const pad2 = (n) => String(n).padStart(2, "0");
+const fmtT = (t) => { const d = new Date(t); return pad2(d.getHours()) + ":" + pad2(d.getMinutes()); };
+const sameDay = (a, b) => new Date(a).toDateString() === new Date(b).toDateString();
+function dayLabel(t){
+  const n = Date.now(); if(sameDay(t, n)) return "Hoy"; if(sameDay(t, n - 864e5)) return "Ayer";
+  return new Date(t).toLocaleDateString("es-CO", { weekday:"long", day:"numeric", month:"long", year: new Date(t).getFullYear() === new Date().getFullYear() ? undefined : "numeric" });
+}
+const fmtList = (t) => { if(!t) return ""; const n = Date.now(); return sameDay(t, n) ? fmtT(t) : sameDay(t, n - 864e5) ? "Ayer" : new Date(t).toLocaleDateString("es-CO", { day:"2-digit", month:"2-digit", year:"2-digit" }); };
+const fmtFull = (t) => t ? new Date(t).toLocaleString("es-CO", { dateStyle:"medium", timeStyle:"short" }) : "—";
+const fmtDur = (s) => { s = Math.round(s || 0); if(s < 60) return s + " s"; const m = Math.floor(s / 60); return m < 60 ? m + " min " + (s % 60) + " s" : Math.floor(m / 60) + " h " + (m % 60) + " min"; };
+const flagOf = (cc) => (cc && /^[A-Za-z]{2}$/.test(cc)) ? String.fromCodePoint(...cc.toUpperCase().split("").map((c) => 127397 + c.charCodeAt(0))) : "🌍";
+async function hashText(text){
+  const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
+  return Array.from(new Uint8Array(buf)).map((b) => b.toString(16).padStart(2, "0")).join("");
+}
+const ageOf = (s) => { const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s || ""); if(!m) return -1; const b = new Date(+m[1], +m[2] - 1, +m[3]), n = new Date(); let a = n.getFullYear() - b.getFullYear(); if(n < new Date(n.getFullYear(), b.getMonth(), b.getDate())) a--; return a; };
+const authErr = (e) => ({
+  "auth/invalid-credential":"Correo o contraseña incorrectos.", "auth/wrong-password":"Correo o contraseña incorrectos.", "auth/user-not-found":"Correo o contraseña incorrectos.",
+  "auth/email-already-in-use":"Ya existe una cuenta con ese correo. Prueba a entrar.", "auth/weak-password":"La contraseña es muy débil (mínimo 6 caracteres).",
+  "auth/invalid-email":"El correo no es válido.", "auth/too-many-requests":"Demasiados intentos. Espera unos minutos e inténtalo de nuevo.",
+  "auth/network-request-failed":"Sin conexión. Revisa tu internet.", "auth/user-disabled":"Esta cuenta fue deshabilitada.",
+  "auth/unauthorized-domain":"Este dominio no está autorizado en Firebase (Authentication → Configuración → Dominios autorizados).",
+  "auth/operation-not-allowed":"Este método de acceso no está activado en Firebase (Authentication → Sign-in method)."
+}[e && e.code] || "No se pudo completar. Inténtalo de nuevo.");
+
+/* foto de perfil: recorte cuadrado + JPEG pequeño (también elimina datos EXIF) */
+function loadImg(src, cors){ return new Promise((res, rej) => { const im = new Image(); if(cors) im.crossOrigin = "anonymous"; im.onload = () => res(im); im.onerror = () => rej(new Error("img")); im.src = src; }); }
+async function squareJpeg(im){
+  const w = im.naturalWidth, h = im.naturalHeight, s = Math.min(w, h);
+  for(const [px, q] of [[256, .82], [256, .6], [192, .6], [128, .6]]){
+    const c = document.createElement("canvas"); c.width = c.height = px;
+    c.getContext("2d").drawImage(im, (w - s) / 2, (h - s) / 2, s, s, 0, 0, px, px);
+    const out = c.toDataURL("image/jpeg", q); if(out.length <= 55000) return out;
+  }
+  throw new Error("big");
+}
+async function fileToAvatar(file){
+  const url = URL.createObjectURL(file);
+  try{ return await squareJpeg(await loadImg(url)); } finally{ URL.revokeObjectURL(url); }
+}
+
+/* ================= ESTADO ================= */
+let user = null, prof = null, priv = null, isAdm = false, seq = 0;
+let chats = new Map(), peers = new Map(), cur = null, msgsData = [], msgLimit = 40, ptab = "chats", qtxt = "", qSeq = 0, qRes = null;
+let unsubChats = null, unsubMsgs = null, unsubPeer = null, unsubSelf = null, statusT = null, verT = null, compSig = "", firstChats = true, olderFlag = false, firstMsgs = true;
+let photo = { onb: null, prof: null }, avTarget = "onb", lastSend = 0, markBusy = false;
+const me = () => user && user.uid;
+const keyOf = (c, who) => (c.a === who ? "A" : "B");
+const otherOf = (c) => (c.a === me() ? c.b : c.a);
+const unreadOf = (c) => c.estado === "activo" && c.ultimoDe && c.ultimoDe !== me() && ms(c.ultimoMsgAt) > ms(c["leido" + keyOf(c, me())]);
+const nameOf = (c) => { const p = peers.get(otherOf(c)); return (c["apodo" + keyOf(c, me())] || "").trim() || (p ? p.nombre : "…"); };
+const peerOnline = (p) => p && p.estado === "activo" && Date.now() - ms(p.ultimaConexion) < ONLINE_MS;
+
+function scr(n){ document.querySelectorAll(".scr").forEach((s) => s.classList.toggle("on", s.id === n)); }
+const openOv = (id) => $(id).classList.add("on");
+const closeOv = (id) => $(id).classList.remove("on");
+const closeAllOv = () => document.querySelectorAll(".ov.on").forEach((o) => o.classList.remove("on"));
+function setMsg(id, t, kind){ const e = $(id); e.className = "msg" + (t ? " " + (kind || "err") : ""); e.textContent = t || ""; }
+function busy(btn, on, txt){ const b = typeof btn === "string" ? $(btn) : btn; if(!b) return; if(on){ b._t = b.textContent; b.disabled = true; if(txt) b.textContent = txt; } else { b.disabled = false; if(b._t) b.textContent = b._t; } }
+
+/* ================= ACCESO ================= */
+let amode = "in";
+function setAmode(m){
+  amode = m;
+  document.querySelectorAll('[data-act="amode"]').forEach((b) => b.classList.toggle("on", b.dataset.m === m));
+  $("aPw2w").hidden = m !== "up"; $("aGo").textContent = m === "up" ? "Crear cuenta" : "Entrar";
+  $("aPw").autocomplete = m === "up" ? "new-password" : "current-password"; $("aForgot").style.display = m === "up" ? "none" : "";
+  setMsg("aMsg", "");
+}
+async function googleLogin(){
+  setMsg("aMsg", "");
+  const pr = new GoogleAuthProvider(); pr.setCustomParameters({ prompt:"select_account" });
+  busy("gBtn", true);
+  try{ await signInWithPopup(auth, pr); }
+  catch(e){
+    if(["auth/popup-blocked", "auth/operation-not-supported-in-this-environment", "auth/web-storage-unsupported"].includes(e.code)){ try{ await signInWithRedirect(auth, pr); return; }catch(e2){ e = e2; } }
+    if(!["auth/popup-closed-by-user", "auth/cancelled-popup-request"].includes(e.code)) setMsg("aMsg", authErr(e));
+  }
+  busy("gBtn", false);
+}
+async function emailSubmit(ev){
+  ev.preventDefault();
+  const em = $("aEm").value.trim(), pw = $("aPw").value;
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)) return setMsg("aMsg", "Escribe un correo válido.");
+  if(pw.length < 6) return setMsg("aMsg", "La contraseña debe tener al menos 6 caracteres.");
+  if(amode === "up" && pw !== $("aPw2").value) return setMsg("aMsg", "Las contraseñas no coinciden.");
+  setMsg("aMsg", ""); busy("aGo", true, amode === "up" ? "Creando…" : "Entrando…");
+  try{
+    if(amode === "up"){ const c = await createUserWithEmailAndPassword(auth, em, pw); try{ await sendEmailVerification(c.user); }catch(e){ console.log(e); } }
+    else await signInWithEmailAndPassword(auth, em, pw);
+  }catch(e){ setMsg("aMsg", authErr(e)); }
+  busy("aGo", false);
+}
+async function forgot(){
+  const em = $("aEm").value.trim();
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)) return setMsg("aMsg", "Escribe tu correo arriba y vuelve a pulsar «¿Olvidaste tu contraseña?».");
+  try{ await sendPasswordResetEmail(auth, em); }catch(e){ if(e.code === "auth/network-request-failed" || e.code === "auth/too-many-requests") return setMsg("aMsg", authErr(e)); }
+  setMsg("aMsg", "Si ese correo tiene cuenta, te enviamos un enlace para restablecer la contraseña.", "ok");
+}
+async function logout(){ try{ await signOut(auth); }catch(e){} }
+
+/* ---- verificar correo ---- */
+function showVerify(){
+  $("vEm").textContent = user.email || ""; setMsg("vMsg", ""); scr("verify");
+  clearInterval(verT); const my = ++seq;
+  verT = setInterval(async () => {
+    try{ await user.reload(); if(user.emailVerified && my === seq){ clearInterval(verT); await user.getIdToken(true); route(); } }catch(e){}
+  }, 4000);
+}
+async function verCheck(){
+  busy("vCheck", true, "Comprobando…");
+  try{ await user.reload(); if(user.emailVerified){ clearInterval(verT); await user.getIdToken(true); busy("vCheck", false); return route(); } setMsg("vMsg", "Aún no está verificado. Abre el enlace del correo y vuelve a intentarlo."); }
+  catch(e){ setMsg("vMsg", authErr(e)); }
+  busy("vCheck", false);
+}
+async function verResend(){
+  busy("vResend", true, "Enviando…");
+  try{ await sendEmailVerification(user); setMsg("vMsg", "Correo enviado. Revisa tu bandeja y el spam.", "ok"); }
+  catch(e){ setMsg("vMsg", authErr(e)); }
+  busy("vResend", false);
+}
+
+/* ---- enrutar según el estado de la cuenta ---- */
+onAuthStateChanged(auth, (u) => {
+  teardown(); user = u; const my = ++seq;
+  if(!u){ scr("auth"); return; }
+  scr("boot"); route(my);
+});
+getRedirectResult(auth).catch((e) => { if(e && e.code) setMsg("aMsg", authErr(e)); });
+async function route(my){
+  if(!user) return;
+  try{
+    if(!user.emailVerified) return showVerify();
+    const s = await getDoc(doc(db, "wm_users", user.uid));
+    if(my && my !== seq) return;
+    if(!s.exists()) return showOnb();
+    prof = s.data();
+    if(prof.estado !== "activo") return showBlocked(prof.estado);
+    try{ const p = await getDoc(doc(db, "wm_priv", user.uid)); priv = p.exists() ? p.data() : {}; }catch(e){ priv = {}; }
+    enterApp();
+  }catch(e){
+    console.log("Cuenta:", e);
+    scr("auth"); setMsg("aMsg", e && e.code === "permission-denied" ? "Sin permiso: publica las reglas de Firestore v15 en Firebase." : "No se pudo cargar tu cuenta. Revisa tu conexión e inténtalo de nuevo.");
+    try{ await signOut(auth); }catch(_){}
+  }
+}
+function showBlocked(st){
+  const t = { suspendido:["Cuenta suspendida", "Tu cuenta fue suspendida temporalmente por incumplir las normas de uso. Si crees que es un error, contáctanos por nuestros medios oficiales."],
+    bloqueado:["Cuenta bloqueada", "Tu cuenta fue bloqueada por incumplir las normas de uso."],
+    eliminado:["Cuenta eliminada", "Esta cuenta fue eliminada. Si crees que es un error, contáctanos por nuestros medios oficiales."] }[st] || ["Cuenta restringida", "No puedes usar el servicio en este momento."];
+  $("blkT").textContent = t[0]; $("blkP").textContent = t[1]; scr("blocked");
+}
+
+/* ---- crear perfil ---- */
+function showOnb(){
+  $("minAge").textContent = MIN_AGE; document.querySelectorAll(".minAge").forEach((e) => e.textContent = MIN_AGE);
+  const nm = $("onbNm"); if(!nm.value) nm.value = (user.displayName || (user.email || "").split("@")[0] || "").slice(0, 40);
+  $("onbBd").max = new Date().toISOString().slice(0, 10);
+  setMsg("onbMsg", ""); paintOnbAv(); scr("onb");
+  if(!photo.onb && user.photoURL){ loadImg(user.photoURL, true).then(squareJpeg).then((d) => { if(!photo.onb){ photo.onb = d; paintOnbAv(); } }).catch(() => {}); }
+}
+function paintOnbAv(){ const n = $("onbNm").value || "?"; $("onbAv").outerHTML = av(n, photo.onb, "lg").replace('class="av lg"', 'class="av lg" id="onbAv"'); }
+async function createProfile(){
+  const nombre = $("onbNm").value.replace(/\s+/g, " ").trim(), bd = $("onbBd").value, bio = $("onbBio").value.trim().slice(0, 100);
+  if(nombre.length < 2) return setMsg("onbMsg", "Escribe tu nombre (mínimo 2 letras).");
+  const a = ageOf(bd);
+  if(a < 0) return setMsg("onbMsg", "Indica tu fecha de nacimiento.");
+  if(a < MIN_AGE) return setMsg("onbMsg", `Debes tener al menos ${MIN_AGE} años para usar WarMess.`);
+  if(a > 110) return setMsg("onbMsg", "Revisa tu fecha de nacimiento.");
+  if(!$("onbOk").checked) return setMsg("onbMsg", "Debes aceptar las normas para continuar.");
+  setMsg("onbMsg", ""); busy("onbGo", true, "Creando…");
+  try{
+    let id = null;
+    const ex = await getDocs(query(collection(db, "wm_ids"), where("uid", "==", user.uid)));
+    if(!ex.empty) id = ex.docs[0].id;
+    for(let i = 0; !id && i < 12; i++){
+      const c = String(100000 + Math.floor(Math.random() * 900000));
+      try{ await setDoc(doc(db, "wm_ids", c), { uid: user.uid, creado: serverTimestamp() }); id = c; }catch(e){ if(e.code !== "permission-denied") throw e; }
     }
+    if(!id) throw { code:"wm/id" };
+    await setDoc(doc(db, "wm_users", user.uid), { id, nombre, foto: photo.onb || "", bio, estado:"activo", creado: serverTimestamp(), ultimaConexion: serverTimestamp() });
+    await setDoc(doc(db, "wm_priv", user.uid), { email: user.email, nacimiento: bd, proveedor: (user.providerData[0] && user.providerData[0].providerId) || "", nVisitas: 0, creado: serverTimestamp() });
+    photo.onb = null; await route(); if(prof && prof.estado === "activo") openProfile(true);
+  }catch(e){
+    console.log("Perfil:", e);
+    setMsg("onbMsg", e.code === "wm/id" || e.code === "permission-denied" ? "No se pudo crear tu perfil. Si eres el administrador, revisa que las reglas de Firestore v15 estén publicadas." : "No se pudo crear tu perfil. Inténtalo de nuevo.");
   }
+  busy("onbGo", false);
+}
 
-  function persist() {
-    try {
-      localStorage.setItem(KEY, JSON.stringify(data));
-      // verificación
-      var check = localStorage.getItem(KEY);
-      if (!check) throw new Error("sin espacio o bloqueado");
-      return true;
-    } catch (e) {
-      showMsg("Error al guardar. Prueba abrir la página en Chrome (https o archivo local).", true);
-      return false;
-    }
+/* ================= APP ================= */
+function teardown(){
+  [unsubChats, unsubMsgs, unsubPeer, unsubSelf].forEach((f) => { try{ f && f(); }catch(e){} });
+  unsubChats = unsubMsgs = unsubPeer = unsubSelf = null;
+  clearInterval(statusT); clearInterval(verT); clearInterval(sessT); clearInterval(secT); sessT = secT = null;
+  admStop(); closeAllOv(); $("adm").classList.remove("on");
+  chats = new Map(); peers = new Map(); cur = null; msgsData = []; prof = priv = null; isAdm = false; qtxt = ""; qRes = null; ptab = "chats";
+  visitRef = null; sessionStarted = false; firstChats = true; compSig = "";
+  $("shell").classList.remove("chat"); $("main").innerHTML = welcomeHTML(); $("q").value = "";
+  document.title = "WarMess · By Sxgura Inc";
+}
+const welcomeHTML = () => `<div class="welcome" style="margin:auto"><div class="logo"><svg viewBox="0 0 24 24"><path d="M4 4h16a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H9l-5 4v-4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/></svg></div><b style="color:#fff;font-size:20px">WarMess</b><p>Elige un chat o busca el ID de otra persona para conectarte.</p></div>`;
+
+function enterApp(){
+  isAdm = (user.email || "").toLowerCase() === ADMIN_EMAIL && user.emailVerified;
+  $("admBtn").hidden = !isAdm;
+  renderMe(); scr("app"); $("main").innerHTML = welcomeHTML(); setPtab("chats");
+  unsubChats = onSnapshot(query(collection(db, "wm_chats"), where("miembros", "array-contains", user.uid)), onChats, (e) => { console.log("Chats:", e); toast("No se pudieron cargar los chats. ¿Reglas v15 publicadas?"); });
+  unsubSelf = onSnapshot(doc(db, "wm_users", user.uid), (s) => {
+    if(!s.exists()) return; prof = s.data(); renderMe();
+    if(prof.estado !== "activo"){ teardownLive(); showBlocked(prof.estado); }
+  }, () => {});
+  startSession();
+}
+function teardownLive(){ [unsubChats, unsubMsgs, unsubPeer].forEach((f) => { try{ f && f(); }catch(e){} }); unsubChats = unsubMsgs = unsubPeer = null; clearInterval(sessT); clearInterval(secT); closeAllOv(); }
+function renderMe(){
+  if(!prof) return; const b = $("meAv"), n = String(prof.nombre || "?");
+  if(photoOk(prof.foto)){ b.style.background = ""; b.style.backgroundImage = `url('${prof.foto}')`; b.textContent = ""; }
+  else{ b.style.backgroundImage = ""; b.style.background = `hsl(${hue(n)} 50% 38%)`; b.textContent = Array.from(n)[0] || "?"; }
+}
+function onChats(snap){
+  const prev = chats; chats = new Map();
+  snap.docs.forEach((d) => chats.set(d.id, { id: d.id, ...d.data({ serverTimestamps:"estimate" }) }));
+  if(!firstChats){
+    chats.forEach((c, id) => {
+      const p = prev.get(id);
+      if(c.estado === "activo" && c.ultimoDe && c.ultimoDe !== me() && p && ms(c.ultimoMsgAt) > ms(p.ultimoMsgAt) && (cur !== id || document.hidden)) beep();
+      if(c.estado === "pendiente" && c.solicita !== me() && !p) beep();
+    });
   }
+  firstChats = false;
+  if(cur && !chats.has(cur)) closeChatUI();
+  ensurePeers(); renderList(); updateBadges();
+  if(cur){ renderHeader(); renderComp(); markRead(); }
+}
+let peerBusy = false;
+async function ensurePeers(){
+  if(peerBusy) return; const need = [];
+  chats.forEach((c) => { const u = otherOf(c), p = peers.get(u); if(!p || Date.now() - p._t > 300000) need.push(u); });
+  if(!need.length) return; peerBusy = true;
+  try{
+    await Promise.all([...new Set(need)].map(async (u) => { try{ const s = await getDoc(doc(db, "wm_users", u)); peers.set(u, { ...(s.exists() ? s.data() : { nombre:"Usuario", estado:"eliminado" }), uid:u, _t: Date.now() }); }catch(e){ if(!peers.has(u)) peers.set(u, { nombre:"Usuario", uid:u, _t: Date.now() - 240000 }); } }));
+  } finally{ peerBusy = false; }
+  renderList(); if(cur) renderHeader();
+}
+function updateBadges(){
+  const r = [...chats.values()].filter((c) => c.estado === "pendiente" && c.solicita !== me()).length;
+  const n = $("reqN"); n.textContent = r; n.hidden = !r;
+  const un = [...chats.values()].filter(unreadOf).length;
+  document.title = (un + r ? `(${un + r}) ` : "") + "WarMess · By Sxgura Inc";
+}
+let actx = null;
+function beep(){
+  try{ actx = actx || new (window.AudioContext || window.webkitAudioContext)(); const o = actx.createOscillator(), g = actx.createGain();
+    o.type = "sine"; o.frequency.value = 880; g.gain.setValueAtTime(.0001, actx.currentTime); g.gain.exponentialRampToValueAtTime(.12, actx.currentTime + .02); g.gain.exponentialRampToValueAtTime(.0001, actx.currentTime + .25);
+    o.connect(g); g.connect(actx.destination); o.start(); o.stop(actx.currentTime + .26); }catch(e){}
+  try{ navigator.vibrate && navigator.vibrate(40); }catch(e){}
+}
 
-  function n(v) {
-    var x = parseFloat(String(v).replace(",", "."));
-    return isNaN(x) ? 0 : x;
+/* ---- lista de chats / solicitudes / búsqueda por ID ---- */
+function setPtab(t){
+  ptab = t; document.querySelectorAll('[data-act="ptab"]').forEach((b) => b.classList.toggle("on", b.dataset.t === t));
+  renderList();
+}
+function chatRow(c){
+  const p = peers.get(otherOf(c)), nm = nameOf(c), un = unreadOf(c);
+  let sub = c.estado === "pendiente" ? "Solicitud enviada · esperando respuesta" : (c.ultimoMsg ? (c.ultimoDe === me() ? "Tú: " : "") + c.ultimoMsg : "Conectados · escribe el primer mensaje");
+  return `<button class="row ${c.id === cur ? "sel" : ""}" data-act="open" data-c="${esc(c.id)}">${av(nm, p && p.foto)}<div class="mid"><div class="nm">${esc(nm)}</div><div class="sub ${un ? "un" : ""}">${esc(sub)}</div></div><div class="meta"><span>${esc(fmtList(ms(c.ultimoMsgAt)))}</span>${un ? '<span class="unr"></span>' : ""}</div></button>`;
+}
+function renderList(){
+  const L = $("list"); if(!L) return;
+  const q = qtxt.trim(), all = [...chats.values()];
+  if(ptab === "reqs"){
+    const rs = all.filter((c) => c.estado === "pendiente" && c.solicita !== me()).sort((a, b) => ms(b.creado) - ms(a.creado));
+    L.innerHTML = rs.length ? rs.map((c) => { const p = peers.get(otherOf(c)), nm = (p && p.nombre) || "…";
+      return `<div class="req"><div class="rq">${av(nm, p && p.foto)}<div class="mid" style="flex:1;min-width:0"><div class="nm" style="font-weight:650">${esc(nm)}</div><div class="sub" style="font-size:13px;color:var(--mut)">ID ${esc((p && p.id) || "…")} · ${esc(fmtList(ms(c.creado)))}</div></div></div>${c.primerMsg ? `<div class="q">${esc(c.primerMsg)}</div>` : ""}<div class="acts"><button class="btn sm" data-act="accept" data-c="${esc(c.id)}">Aceptar</button><button class="btn sm ghost" data-act="reject" data-c="${esc(c.id)}">Rechazar</button></div></div>`; }).join("")
+      : `<div class="empty"><div class="big">📭</div>No tienes solicitudes pendientes.</div>`;
+    return;
   }
-
-  function money(v) {
-    return "$" + Math.round(n(v)).toLocaleString("es-CO");
+  const isId = /^\d+$/.test(q);
+  let html = "";
+  let rows = all.filter((c) => c.estado === "activo" || (c.estado === "pendiente" && c.solicita === me()) || c.estado === "bloqueado");
+  if(q && !isId){ const n = q.toLowerCase(); rows = rows.filter((c) => nameOf(c).toLowerCase().includes(n)); }
+  rows.sort((a, b) => ms(b.ultimoMsgAt) - ms(a.ultimoMsgAt));
+  if(isId){
+    html += `<div class="hint">Resultados para el ID <b>${esc(q)}</b></div>`;
+    if(q.length < 3) html += `<div class="empty" style="padding:24px">Escribe al menos 3 dígitos del ID.</div>`;
+    else if(qRes === null) html += `<div class="empty" style="padding:24px">Buscando…</div>`;
+    else if(!qRes.length) html += `<div class="empty" style="padding:24px"><div class="big">🔎</div>No hay usuarios con ese ID.</div>`;
+    else html += qRes.map((u) => {
+      const cid = [me(), u.uid].sort().join("_"), ex = chats.get(cid), self = u.uid === me();
+      const btn = self ? '<span style="color:var(--mut);font-size:13px">Eres tú</span>' : ex ? `<button class="btn sm ghost" data-act="open" data-c="${esc(cid)}">${ex.estado === "pendiente" ? (ex.solicita === me() ? "Pendiente" : "Ver solicitud") : "Abrir"}</button>` : `<button class="btn sm" data-act="connect" data-u="${esc(u.uid)}">Conectar</button>`;
+      return `<div class="row" style="cursor:default">${av(u.nombre, u.foto)}<div class="mid"><div class="nm">${esc(u.nombre)}</div><div class="sub">ID ${esc(u.id)}${u.bio ? " · " + esc(u.bio) : ""}</div></div>${btn}</div>`; }).join("");
+    if(rows.length) html += `<div class="hint" style="margin-top:6px">Tus chats</div>`;
   }
+  html += rows.length ? rows.map(chatRow).join("") : (!isId ? (q ? `<div class="empty">Ningún chat coincide con «${esc(q)}».<br>Para buscar a alguien nuevo, escribe su <b>ID</b> (números).</div>` : `<div class="empty"><div class="big">💬</div>Aún no tienes chats.<br>Pide a alguien su <b>ID de usuario</b> y búscalo arriba para conectarte. Tu ID está en tu perfil.</div>`) : "");
+  L.innerHTML = html;
+}
+let qT = null;
+function onSearch(){
+  qtxt = $("q").value; clearTimeout(qT);
+  const q = qtxt.trim();
+  if(q && ptab === "reqs") setPtab("chats");
+  if(/^\d{3,}$/.test(q)){ qRes = null; renderList(); qT = setTimeout(() => runSearch(q), 250); }
+  else{ qRes = []; renderList(); }
+}
+async function runSearch(q){
+  const my = ++qSeq;
+  try{
+    const s = await getDocs(query(collection(db, "wm_users"), where("id", ">=", q), where("id", "<=", q + ""), limit(6)));
+    if(my !== qSeq) return;
+    qRes = s.docs.map((d) => ({ uid:d.id, ...d.data() })).filter((u) => u.estado === "activo" || u.uid === me());
+  }catch(e){ console.log("Búsqueda:", e); if(my !== qSeq) return; qRes = []; toast("No se pudo buscar. Revisa tu conexión."); }
+  renderList();
+}
 
-  function showMsg(text, err) {
-    var el = $("msg");
-    el.textContent = text;
-    el.className = "msg " + (err ? "err" : "ok");
-    setTimeout(function () {
-      el.className = "msg";
-      el.textContent = "";
-    }, 2200);
-  }
+/* ---- conectar ---- */
+function connectSheet(uid){
+  const u = (qRes || []).find((x) => x.uid === uid); if(!u) return;
+  $("shConn").innerHTML = `<h2>Conectar<button class="ibtn" data-act="closeov" aria-label="Cerrar">${IC.x}</button></h2>
+    <div style="text-align:center;margin:10px 0 6px"><div style="display:flex;justify-content:center">${av(u.nombre, u.foto, "lg")}</div><div style="font-size:19px;font-weight:700;margin-top:10px">${esc(u.nombre)}</div><div style="color:var(--mut);font-size:14px">ID ${esc(u.id)}</div></div>
+    <label class="f" for="cnMsg">Mensaje de presentación <span style="font-weight:400">(opcional)</span></label>
+    <textarea class="in" id="cnMsg" rows="3" maxlength="200" placeholder="Hola, soy…" style="resize:none"></textarea>
+    <div class="msg" id="cnErr"></div>
+    <button class="btn" data-act="sendReq" data-u="${esc(uid)}" id="cnGo">Enviar solicitud</button>`;
+  openOv("ovConn");
+}
+async function sendReq(uid){
+  const cid = [me(), uid].sort().join("_"), ex = chats.get(cid);
+  if(ex){ closeOv("ovConn"); return openChat(cid); }
+  const a = [me(), uid].sort(), txt = ($("cnMsg").value || "").trim().slice(0, 200);
+  busy("cnGo", true, "Enviando…");
+  try{
+    await setDoc(doc(db, "wm_chats", cid), { a:a[0], b:a[1], miembros:a, estado:"pendiente", solicita:me(), primerMsg:txt, creado:serverTimestamp(), ultimoMsg:"", ultimoMsgAt:serverTimestamp(), ultimoDe:"", leidoA:serverTimestamp(), leidoB:serverTimestamp(), apodoA:"", apodoB:"", bloqueadoPor:"" });
+    closeOv("ovConn"); toast("Solicitud enviada ✅"); $("q").value = ""; qtxt = ""; qRes = null; setPtab("chats");
+  }catch(e){ console.log("Solicitud:", e); setMsg("cnErr", e.code === "permission-denied" ? "No es posible enviar la solicitud a este usuario." : "No se pudo enviar. Inténtalo de nuevo."); busy("cnGo", false); }
+}
+async function answerReq(cid, ok){
+  try{ await updateDoc(doc(db, "wm_chats", cid), { estado: ok ? "activo" : "rechazado" }); if(ok){ setPtab("chats"); openChat(cid); } else toast("Solicitud rechazada"); }
+  catch(e){ console.log(e); toast("No se pudo actualizar la solicitud."); }
+}
 
-  function escapeHtml(s) {
-    return String(s || "")
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;");
-  }
+/* ---- chat ---- */
+function openChat(cid){
+  const c = chats.get(cid); if(!c) return;
+  if(cur !== cid){
+    if(!cur) try{ history.pushState({ wm:1 }, ""); }catch(e){}
+    try{ unsubMsgs && unsubMsgs(); unsubPeer && unsubPeer(); }catch(e){}
+    cur = cid; msgsData = []; msgLimit = 40; compSig = ""; firstMsgs = true; olderFlag = false;
+    $("main").innerHTML = `<div class="mh"><button class="ibtn back" data-act="back" aria-label="Volver">${IC.back}</button><button class="who" data-act="info"><span id="mhAv"></span><div><div class="t1" id="mhN"></div><div class="t2" id="mhS"></div></div></button></div><div class="msgs" id="msgs"></div><div id="compWrap"></div>`;
+    $("shell").classList.add("chat"); renderList(); renderHeader(); renderComp(); subMsgs();
+    const u = otherOf(c);
+    unsubPeer = onSnapshot(doc(db, "wm_users", u), (s) => { if(s.exists()){ peers.set(u, { ...s.data(), uid:u, _t: Date.now() }); renderHeader(); } }, () => {});
+    clearInterval(statusT); statusT = setInterval(renderHeader, 30000);
+  }else{ $("shell").classList.add("chat"); }
+}
+function closeChatUI(){
+  try{ unsubMsgs && unsubMsgs(); unsubPeer && unsubPeer(); }catch(e){} unsubMsgs = unsubPeer = null; clearInterval(statusT);
+  cur = null; msgsData = []; $("shell").classList.remove("chat"); $("main").innerHTML = welcomeHTML(); closeOv("ovInfo"); renderList();
+}
+function subMsgs(){
+  const cid = cur; try{ unsubMsgs && unsubMsgs(); }catch(e){}
+  unsubMsgs = onSnapshot(query(collection(db, "wm_chats", cid, "msgs"), orderBy("creado", "desc"), limit(msgLimit)), (snap) => {
+    if(cur !== cid) return;
+    const fresh = snap.docChanges ? snap.docChanges().filter((ch) => ch.type === "added" && !ch.doc.metadata.hasPendingWrites && ch.doc.data().de !== me()).length : 0;
+    msgsData = snap.docs.map((d) => ({ id:d.id, ...d.data({ serverTimestamps:"estimate" }), pend: !!(d.metadata && d.metadata.hasPendingWrites) })).reverse();
+    renderMsgs(); markRead();
+    if(!firstMsgs && fresh && document.hidden) beep();
+    firstMsgs = false;
+  }, (e) => { console.log("Mensajes:", e); toast("No se pudieron cargar los mensajes."); });
+}
+function renderHeader(){
+  const c = chats.get(cur); if(!c || !$("mhN")) return;
+  const p = peers.get(otherOf(c)), nm = nameOf(c);
+  $("mhAv").innerHTML = av(nm, p && p.foto, "sm"); $("mhN").textContent = nm;
+  const s = $("mhS"); let t = "", on = false;
+  if(c.estado === "pendiente") t = c.solicita === me() ? "Solicitud pendiente" : "Solicitud de conexión";
+  else if(!p) t = "";
+  else if(p.estado && p.estado !== "activo") t = "No disponible";
+  else if(c.bloqueadoPor) t = "";
+  else if(peerOnline(p)){ t = "en línea"; on = true; }
+  else{ const l = ms(p.ultimaConexion); t = l ? (sameDay(l, Date.now()) ? "últ. vez hoy a las " + fmtT(l) : sameDay(l, Date.now() - 864e5) ? "últ. vez ayer a las " + fmtT(l) : "últ. vez " + new Date(l).toLocaleDateString("es-CO")) : ""; }
+  s.textContent = t; s.className = "t2" + (on ? " on" : "");
+}
+function renderComp(){
+  const c = chats.get(cur), w = $("compWrap"); if(!c || !w) return;
+  const sig = c.estado + "|" + (c.bloqueadoPor || "") + "|" + c.solicita;
+  if(sig === compSig) return; compSig = sig;
+  if(c.estado === "activo" && !c.bloqueadoPor){
+    w.innerHTML = `<form class="comp" id="cForm" autocomplete="off"><textarea id="cTxt" rows="1" maxlength="1000" placeholder="Escribe un mensaje" enterkeyhint="send"></textarea><button class="send" type="submit" aria-label="Enviar">${IC.send}</button></form>`;
+    const ta = $("cTxt"), fit = () => { ta.style.height = "auto"; ta.style.height = Math.min(ta.scrollHeight, 130) + "px"; };
+    ta.addEventListener("input", fit);
+    ta.addEventListener("keydown", (e) => { if(e.key === "Enter" && !e.shiftKey && !e.isComposing && !matchMedia("(pointer:coarse)").matches){ e.preventDefault(); $("cForm").requestSubmit(); } });
+    $("cForm").addEventListener("submit", (e) => { e.preventDefault(); sendMsg(); });
+    if(!matchMedia("(pointer:coarse)").matches) ta.focus();
+  }else if(c.estado === "pendiente" && c.solicita !== me()){
+    w.innerHTML = `<div class="lockbar">Esta persona quiere conectarse contigo.<div class="acts" style="justify-content:center"><button class="btn sm" data-act="accept" data-c="${esc(c.id)}">Aceptar</button><button class="btn sm ghost" data-act="reject" data-c="${esc(c.id)}">Rechazar</button></div></div>`;
+  }else if(c.bloqueadoPor === me()){
+    w.innerHTML = `<div class="lockbar">Bloqueaste a este contacto.<div class="acts" style="justify-content:center"><button class="btn sm ghost" data-act="unblock">Desbloquear</button></div></div>`;
+  }else if(c.bloqueadoPor){ w.innerHTML = `<div class="lockbar">No puedes enviar mensajes en este chat.</div>`;
+  }else{ w.innerHTML = `<div class="lockbar">${c.estado === "rechazado" || c.estado === "pendiente" ? "Esperando respuesta a tu solicitud." : "Chat no disponible."}</div>`; }
+}
+function renderMsgs(){
+  const el = $("msgs"); if(!el) return;
+  const c = chats.get(cur); if(!c) return;
+  const nearBottom = el.scrollHeight - el.scrollTop - el.clientHeight < 90, prevH = el.scrollHeight, prevTop = el.scrollTop;
+  const peerRead = ms(c["leido" + (c.a === me() ? "B" : "A")]);
+  let h = "";
+  const all = msgsData.length < msgLimit;
+  if(!all) h += `<button class="more" data-act="older">Cargar mensajes anteriores</button>`;
+  if(all && c.primerMsg){
+    const mine = c.solicita === me();
+    h += `<div class="sysm">${mine ? "Tu mensaje de presentación" : esc(nameOf(c)) + " te escribió"}:<br><b>«${esc(c.primerMsg)}»</b></div>`;
+  }else if(all && c.estado === "activo" && !msgsData.length){ h += `<div class="sysm">Ya están conectados. ¡Escribe el primer mensaje! 👋</div>`; }
+  let lastDay = 0;
+  msgsData.forEach((m) => {
+    const t = ms(m.creado) || Date.now(), mine = m.de === me();
+    if(!lastDay || !sameDay(lastDay, t)){ h += `<div class="day">${esc(dayLabel(t))}</div>`; lastDay = t; }
+    const st = !mine ? "" : m.pend ? IC.clock : ms(m.creado) && ms(m.creado) <= peerRead ? IC.checks : IC.check;
+    h += `<div class="b ${mine ? "me" : "him"}">${esc(m.texto)}<span class="tm ${mine && st === IC.checks ? "rd" : ""}">${fmtT(t)}${st}</span></div>`;
+  });
+  el.innerHTML = h;
+  if(olderFlag){ el.scrollTop = el.scrollHeight - prevH + prevTop; olderFlag = false; }
+  else if(nearBottom || firstMsgs) el.scrollTop = el.scrollHeight;
+  else el.scrollTop = prevTop;
+}
+async function markRead(){
+  const c = chats.get(cur); if(!c || document.hidden || markBusy || !unreadOf(c)) return;
+  markBusy = true;
+  try{ await updateDoc(doc(db, "wm_chats", c.id), { ["leido" + keyOf(c, me())]: serverTimestamp() }); }catch(e){}
+  markBusy = false;
+}
+document.addEventListener("visibilitychange", () => { if(!document.hidden){ markRead(); tickConn(); } });
+function sendMsg(){
+  const ta = $("cTxt"), c = chats.get(cur); if(!ta || !c) return;
+  const text = ta.value.trim(); if(!text) return;
+  if(Date.now() - lastSend < 350) return; lastSend = Date.now();
+  ta.value = ""; ta.style.height = "auto"; ta.focus();
+  const b = writeBatch(db), mref = doc(collection(db, "wm_chats", c.id, "msgs"));
+  b.set(mref, { de: me(), texto: text.slice(0, 1000), creado: serverTimestamp() });
+  b.update(doc(db, "wm_chats", c.id), { ultimoMsg: text.slice(0, 80), ultimoMsgAt: serverTimestamp(), ultimoDe: me() });
+  b.commit().catch((e) => { console.log("Envío:", e); toast("No se pudo enviar el mensaje."); const t = $("cTxt"); if(t && !t.value) t.value = text; });
+  const el = $("msgs"); if(el) setTimeout(() => { el.scrollTop = el.scrollHeight; }, 30);
+}
 
-  function statusOf(r) {
-    var debe = n(r.debe);
-    var pago = n(r.pago);
-    var total = n(r.unidades) * PRICE;
-    if (debe <= 0 && pago >= total && total > 0) return "paid";
-    if (pago <= 0 && debe > 0) return "unpaid";
-    if (debe > 0) return "debt";
-    if (pago > 0 && pago < total) return "debt";
-    if (total === 0) return "unpaid";
-    return "paid";
-  }
+/* ---- información del contacto, apodo, bloqueo y reporte ---- */
+function infoSheet(){
+  const c = chats.get(cur); if(!c) return;
+  const p = peers.get(otherOf(c)) || {}, ap = c["apodo" + keyOf(c, me())] || "", blk = c.bloqueadoPor === me();
+  $("shInfo").innerHTML = `<h2>Información<button class="ibtn" data-act="closeov" aria-label="Cerrar">${IC.x}</button></h2>
+    <div style="text-align:center;margin:8px 0"><div style="display:flex;justify-content:center">${av(p.nombre, p.foto, "lg")}</div><div style="font-size:20px;font-weight:700;margin-top:10px">${esc(p.nombre || "Usuario")}</div>${p.bio ? `<div style="color:var(--mut);font-size:14px;margin-top:3px">${esc(p.bio)}</div>` : ""}</div>
+    <div class="kv"><span>ID de usuario</span><span><b>${esc(p.id || "—")}</b></span></div>
+    <label class="f" for="apIn">Cómo quieres llamarle <span style="font-weight:400">(solo lo ves tú)</span></label>
+    <div style="display:flex;gap:8px"><input class="in" id="apIn" maxlength="40" placeholder="${esc(p.nombre || "Apodo")}" value="${esc(ap)}"><button class="btn sm" data-act="saveAp" style="flex:none">Guardar</button></div>
+    <div class="acts" style="margin-top:18px"><button class="btn ghost sm" data-act="${blk ? "unblock" : "block"}" style="flex:1">${blk ? "Desbloquear" : "Bloquear"}</button><button class="btn bad sm" data-act="repForm" style="flex:1">Reportar</button></div>
+    <div id="repBox"></div>`;
+  openOv("ovInfo");
+}
+async function saveApodo(){
+  const c = chats.get(cur); if(!c) return; const v = $("apIn").value.replace(/\s+/g, " ").trim().slice(0, 40);
+  try{ await updateDoc(doc(db, "wm_chats", c.id), { ["apodo" + keyOf(c, me())]: v }); toast(v ? "Nombre guardado" : "Nombre restablecido"); closeOv("ovInfo"); }catch(e){ toast("No se pudo guardar."); }
+}
+async function setBlock(on){
+  const c = chats.get(cur); if(!c) return;
+  if(on && !confirm("¿Bloquear a este contacto? No podrán enviarse mensajes.")) return;
+  try{ await updateDoc(doc(db, "wm_chats", c.id), { bloqueadoPor: on ? me() : "" }); toast(on ? "Contacto bloqueado" : "Contacto desbloqueado"); closeOv("ovInfo"); }catch(e){ toast("No se pudo actualizar."); }
+}
+function reportForm(){
+  $("repBox").innerHTML = `<div class="acard" style="margin-top:14px"><h4>Reportar a este usuario</h4>
+    <select class="in" id="rpM"><option>Spam</option><option>Acoso o amenazas</option><option>Contenido inapropiado</option><option>Estafa o engaño</option><option>Suplantación de identidad</option><option>Otro</option></select>
+    <textarea class="in" id="rpD" rows="3" maxlength="300" placeholder="Cuéntanos qué pasó (opcional)" style="margin-top:8px;resize:none"></textarea>
+    <p class="fine" style="text-align:left;margin-top:8px">Se enviarán al administrador los últimos mensajes de este chat como evidencia.</p>
+    <button class="btn bad" data-act="repSend" id="rpGo">Enviar reporte</button></div>`;
+}
+async function sendReport(){
+  const c = chats.get(cur); if(!c) return; busy("rpGo", true, "Enviando…");
+  try{
+    await addDoc(collection(db, "wm_reportes"), { reportante: me(), reportado: otherOf(c), chatId: c.id, motivo: $("rpM").value, detalle: $("rpD").value.trim().slice(0, 300),
+      mensajes: msgsData.slice(-20).map((m) => ({ de: m.de, t: String(m.texto || "").slice(0, 200), ts: ms(m.creado) || Date.now() })), creado: serverTimestamp(), estado: "nuevo" });
+    toast("Reporte enviado. Gracias 🙏"); closeOv("ovInfo");
+  }catch(e){ console.log(e); toast("No se pudo enviar el reporte."); busy("rpGo", false); }
+}
 
-  function badge(st) {
-    if (st === "paid") return '<span class="badge green">Pagó completo</span>';
-    if (st === "debt") return '<span class="badge orange">Debe</span>';
-    return '<span class="badge red">No pagado</span>';
-  }
+/* ---- mi perfil ---- */
+function openProfile(first){
+  if(!prof) return;
+  photo.prof = null;
+  $("shProf").innerHTML = `<h2>${first ? "¡Bienvenido a WarMess! 🎉" : "Mi perfil"}<button class="ibtn" data-act="closeov" aria-label="Cerrar">${IC.x}</button></h2>
+    ${first ? '<p class="lead" style="margin:4px 0 0">Tu cuenta está lista. Comparte tu ID para que te encuentren.</p>' : ""}
+    <div class="idbox"><div style="flex:1"><small>Tu ID de usuario</small><b>${esc(prof.id)}</b></div><button class="btn sm ghost" data-act="copyId" style="flex:none">${IC.copy} Copiar</button></div>
+    <div class="avpick" data-act="pickAv" data-t="prof" style="margin-top:18px"><div id="pfAv">${av(prof.nombre, prof.foto, "lg")}</div><div class="cam"><svg class="i" viewBox="0 0 24 24"><path d="M4 8h3l2-2h6l2 2h3v11H4zM12 17a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/></svg></div></div>
+    <label class="f" for="pfNm">Nombre</label><input class="in" id="pfNm" maxlength="40" value="${esc(prof.nombre)}">
+    <label class="f" for="pfBd">Fecha de nacimiento</label><input class="in" id="pfBd" type="date" value="${esc((priv && priv.nacimiento) || "")}" max="${new Date().toISOString().slice(0, 10)}">
+    <label class="f" for="pfBio">Estado</label><input class="in" id="pfBio" maxlength="100" value="${esc(prof.bio || "")}" placeholder="Ej: Disponible">
+    <div class="kv" style="margin-top:12px"><span>Correo</span><span>${esc(user.email || "")}</span></div>
+    <div class="msg" id="pfMsg"></div>
+    <button class="btn" data-act="saveProf" id="pfGo">Guardar cambios</button>
+    <button class="btn ghost" data-act="legal">Normas de uso y privacidad</button>
+    <button class="btn bad" data-act="logout">Cerrar sesión</button>`;
+  openOv("ovProf");
+}
+async function savePriv(fields){
+  const r = doc(db, "wm_priv", user.uid);
+  try{ await updateDoc(r, fields); }
+  catch(e){ if(e.code === "not-found") await setDoc(r, { email: user.email, nacimiento:"", proveedor: (user.providerData[0] && user.providerData[0].providerId) || "", nVisitas:0, creado: serverTimestamp(), ...fields }); else throw e; }
+}
+async function saveProfile(){
+  const nombre = $("pfNm").value.replace(/\s+/g, " ").trim(), bd = $("pfBd").value, bio = $("pfBio").value.trim().slice(0, 100);
+  if(nombre.length < 2) return setMsg("pfMsg", "Escribe un nombre válido (mínimo 2 letras).");
+  const a = ageOf(bd); if(a < MIN_AGE || a > 110) return setMsg("pfMsg", a < 0 ? "Indica tu fecha de nacimiento." : `Debes tener al menos ${MIN_AGE} años.`);
+  setMsg("pfMsg", ""); busy("pfGo", true, "Guardando…");
+  try{
+    const up = { nombre, bio }; if(photo.prof) up.foto = photo.prof;
+    await updateDoc(doc(db, "wm_users", user.uid), up);
+    if(!priv || priv.nacimiento !== bd){ await savePriv({ nacimiento: bd }); priv = { ...(priv || {}), nacimiento: bd }; }
+    prof = { ...prof, ...up }; photo.prof = null; renderMe(); toast("Perfil actualizado ✅"); closeOv("ovProf");
+  }catch(e){ console.log(e); setMsg("pfMsg", "No se pudo guardar. Inténtalo de nuevo."); }
+  busy("pfGo", false);
+}
+async function onAvatarFile(){
+  const f = $("avFile").files[0]; $("avFile").value = ""; if(!f) return;
+  if(!/^image\//.test(f.type)) return toast("Elige una imagen.");
+  try{
+    const d = await fileToAvatar(f); photo[avTarget] = d;
+    if(avTarget === "onb") paintOnbAv(); else $("pfAv").innerHTML = av($("pfNm").value || prof.nombre, d, "lg");
+  }catch(e){ toast("No pude leer esa imagen. Prueba con otra (JPG o PNG)."); }
+}
 
-  function updateTotalView() {
-    var u = n($("unidades").value);
-    $("totalView").value = money(u * PRICE);
-  }
-
-  // Si escriben pago, sugiere debe automáticamente (se puede editar)
-  function suggestDebe() {
-    var total = n($("unidades").value) * PRICE;
-    var pago = n($("pago").value);
-    var debe = Math.max(0, total - pago);
-    $("debe").value = debe ? String(debe) : "0";
-  }
-
-  function clearForm() {
-    $("editId").value = "";
-    $("nombre").value = "";
-    $("unidades").value = "";
-    $("pago").value = "";
-    $("debe").value = "";
-    $("nota").value = "";
-    $("totalView").value = "$0";
-    $("formTitle").textContent = "Nueva venta";
-    $("btnSave").textContent = "Guardar registro";
-    $("btnCancel").style.display = "none";
-  }
-
-  function stats() {
-    var reparto = 0, porPagar = 0, completas = 0, ganancia = 0;
-    for (var i = 0; i < data.length; i++) {
-      var r = data[i];
-      var u = n(r.unidades);
-      var st = statusOf(r);
-      reparto += u;
-      ganancia += n(r.pago);
-      if (st === "paid") completas += u;
-      else porPagar += u;
-    }
-    $("stReparto").textContent = reparto;
-    $("stPorPagar").textContent = porPagar;
-    $("stCompletas").textContent = completas;
-    $("stGanancia").textContent = money(ganancia);
-  }
-
-  function render() {
-    stats();
-    var q = filter.trim().toLowerCase();
-    var rows = data.slice().sort(function (a, b) { return b.ts - a.ts; });
-    if (q) {
-      rows = rows.filter(function (r) {
-        return String(r.nombre || "").toLowerCase().indexOf(q) !== -1;
-      });
-    }
-
-    if (!rows.length) {
-      $("list").innerHTML = '<div class="card empty">Sin registros aún. Guarda la primera venta.</div>';
-      return;
-    }
-
-    var html = "";
-    for (var i = 0; i < rows.length; i++) {
-      var r = rows[i];
-      var total = n(r.unidades) * PRICE;
-      var st = statusOf(r);
-      html += '<div class="item">' +
-        '<div class="top"><div class="name">' + escapeHtml(r.nombre) + '</div>' + badge(st) + '</div>' +
-        '<div class="meta">' +
-          '<b>' + r.unidades + '</b> natilla(s) · Total <b>' + money(total) + '</b><br>' +
-          'Pagó <b>' + money(r.pago) + '</b> · Debe <b>' + money(r.debe) + '</b>' +
-        '</div>' +
-        (r.nota ? '<div class="note">' + escapeHtml(r.nota) + '</div>' : '') +
-        '<div class="actions">' +
-          '<button class="btn small gray" type="button" data-edit="' + r.id + '">Editar</button>' +
-          '<button class="btn small red" type="button" data-del="' + r.id + '">Borrar</button>' +
-        '</div>' +
-      '</div>';
-    }
-    $("list").innerHTML = html;
-  }
-
-  $("btnSave").onclick = function () {
-    var nombre = $("nombre").value.trim();
-    var unidades = n($("unidades").value);
-    var pago = n($("pago").value);
-    var debe = n($("debe").value);
-    var nota = $("nota").value.trim();
-    var editId = $("editId").value;
-
-    if (!nombre) { showMsg("Escribe el nombre", true); return; }
-    if (unidades <= 0) { showMsg("Unidades debe ser mayor a 0", true); return; }
-
-    var row = {
-      id: editId || ("id_" + Date.now() + "_" + Math.random().toString(36).slice(2, 8)),
-      nombre: nombre,
-      unidades: unidades,
-      pago: pago,
-      debe: debe,
-      nota: nota,
-      ts: Date.now()
-    };
-
-    if (editId) {
-      var idx = -1;
-      for (var i = 0; i < data.length; i++) if (data[i].id === editId) idx = i;
-      if (idx >= 0) {
-        row.ts = data[idx].ts || row.ts;
-        data[idx] = row;
-      } else {
-        data.push(row);
-      }
-    } else {
-      data.push(row);
-    }
-
-    if (!persist()) return;
-    clearForm();
-    render();
-    showMsg("Guardado correctamente");
+/* ---- registro de visitas y presencia ---- */
+let visitRef = null, sessionStarted = false, sessT = null, secT = null, activeSec = 0;
+async function fetchJSON(url, t = 4500){ const c = new AbortController(), k = setTimeout(() => c.abort(), t); try{ const r = await fetch(url, { signal:c.signal, cache:"no-store" }); if(!r.ok) throw new Error(r.status); return await r.json(); } finally{ clearTimeout(k); } }
+async function getGeoRaw(){
+  try{ const d = await fetchJSON("https://ipwho.is/"); if(d && d.success !== false && d.ip) return { ip:d.ip, cc:d.country_code, pais:d.country, region:d.region, ciudad:d.city, lat:d.latitude, lon:d.longitude, isp:(d.connection && (d.connection.isp || d.connection.org)) || "", asn:(d.connection && d.connection.asn) || "", tz:d.timezone && d.timezone.id, cp:d.postal, continente:d.continent }; }catch(e){}
+  try{ const d = await fetchJSON("https://ipapi.co/json/"); if(d && d.ip && !d.error) return { ip:d.ip, cc:d.country_code, pais:d.country_name, region:d.region, ciudad:d.city, lat:d.latitude, lon:d.longitude, isp:d.org || "", asn:d.asn || "", tz:d.timezone, cp:d.postal, continente:d.continent_code }; }catch(e){}
+  try{ const d = await fetchJSON("https://api.ipify.org?format=json"); if(d && d.ip) return { ip:d.ip }; }catch(e){}
+  return {};
+}
+function deviceInfo(){
+  const ua = navigator.userAgent, m = (re) => { const x = ua.match(re); return x ? x[1].split(".")[0] : ""; };
+  let nav = "Desconocido", ver = "";
+  if(/EdgA?\/|EdgiOS\/|Edg\//.test(ua)){ nav = "Edge"; ver = m(/Edg[A-Za-z]*\/([\d.]+)/); }
+  else if(/OPR\/|OPiOS\//.test(ua)){ nav = "Opera"; ver = m(/(?:OPR|OPiOS)\/([\d.]+)/); }
+  else if(/SamsungBrowser/.test(ua)){ nav = "Samsung Internet"; ver = m(/SamsungBrowser\/([\d.]+)/); }
+  else if(/Firefox\/|FxiOS\//.test(ua)){ nav = "Firefox"; ver = m(/(?:Firefox|FxiOS)\/([\d.]+)/); }
+  else if(/Instagram|FBAN|FBAV|TikTok|musical_ly/i.test(ua)) nav = "Navegador interno de app";
+  else if(/CriOS\/|Chrome\//.test(ua)){ nav = "Chrome"; ver = m(/(?:CriOS|Chrome)\/([\d.]+)/); }
+  else if(/Safari\//.test(ua) && /Version\//.test(ua)){ nav = "Safari"; ver = m(/Version\/([\d.]+)/); }
+  const touch = navigator.maxTouchPoints || 0;
+  let so = "Desconocido", disp = "PC", modelo = "";
+  if(/android/i.test(ua)){ so = "Android"; disp = /Mobile/i.test(ua) ? "Android" : "Tablet Android"; const x = ua.match(/;\s*([^;)]+?)\s+Build/i) || ua.match(/Android[^;]*;\s*([^;)]+)\)/i); modelo = x ? x[1].trim() : ""; }
+  else if(/iPhone|iPad|iPod/i.test(ua) || (/Macintosh/i.test(ua) && touch > 1)){ disp = /iPad/i.test(ua) || (/Macintosh/i.test(ua) && touch > 1) ? "iPad" : "iPhone"; so = disp === "iPad" ? "iPadOS" : "iOS"; modelo = disp; }
+  else if(/Windows/i.test(ua)){ so = "Windows"; modelo = "PC Windows"; }
+  else if(/CrOS/i.test(ua)){ so = "ChromeOS"; modelo = "Chromebook"; }
+  else if(/Macintosh|Mac OS/i.test(ua)){ so = "macOS"; modelo = "Mac"; }
+  else if(/Linux/i.test(ua)){ so = "Linux"; modelo = "PC Linux"; }
+  return { dispositivo: disp, modelo, so, navegador: nav, navegadorVersion: ver };
+}
+async function startSession(){
+  if(sessionStarted) return; sessionStarted = true; activeSec = 0;
+  const mine = user.uid;
+  const geo = await getGeoRaw().catch(() => ({})), d = deviceInfo(), conn = navigator.connection || {}, now = new Date();
+  if(!user || user.uid !== mine) return;
+  const v = {
+    pais: geo.pais || "Desconocido", codigoPais: (geo.cc || "").toUpperCase(), region: geo.region || "", ciudad: geo.ciudad || "Desconocida", continente: geo.continente || "", codigoPostal: geo.cp || "",
+    lat: geo.lat != null ? Math.round(geo.lat * 100) / 100 : null, lon: geo.lon != null ? Math.round(geo.lon * 100) / 100 : null,
+    ip: geo.ip || "Oculta", isp: geo.isp || "Desconocido", asn: String(geo.asn || ""), zonaHoraria: Intl.DateTimeFormat().resolvedOptions().timeZone || geo.tz || "",
+    dispositivo: d.dispositivo, modelo: d.modelo, so: d.so, navegador: d.navegador, navegadorVersion: d.navegadorVersion,
+    resolucion: screen.width + "x" + screen.height, viewport: innerWidth + "x" + innerHeight, dpr: window.devicePixelRatio || 1, idioma: navigator.language || "",
+    memoriaGB: navigator.deviceMemory || null, nucleos: navigator.hardwareConcurrency || null, tactil: navigator.maxTouchPoints || 0,
+    conexion: [conn.effectiveType, conn.downlink ? conn.downlink + "Mbps" : ""].filter(Boolean).join(" · "), referrer: document.referrer || "Directo", pagina: location.pathname,
+    fecha: now.toLocaleDateString(), hora: now.toLocaleTimeString(), offsetMin: -now.getTimezoneOffset()
   };
+  try{
+    visitRef = await addDoc(collection(db, "wm_visitas"), { uid: mine, nombre: prof ? prof.nombre : "", email: user.email || "", ...v, duracionSeg: 0, creado: serverTimestamp(), ultimaActividad: serverTimestamp() });
+  }catch(e){ console.log("Visita:", e); }
+  try{ await savePriv({ datosVisita: v, ultimoIngreso: serverTimestamp(), nVisitas: increment(1), ip: v.ip, pais: v.pais, ciudad: v.ciudad, dispositivo: v.dispositivo }); }catch(e){ console.log("Datos:", e); }
+  tickConn();
+  secT = setInterval(() => { if(!document.hidden) activeSec++; }, 1000);
+  sessT = setInterval(tickConn, 60000);
+}
+async function tickConn(){
+  if(!user || !prof || prof.estado !== "activo" || document.hidden) return;
+  try{ await updateDoc(doc(db, "wm_users", user.uid), { ultimaConexion: serverTimestamp() }); }catch(e){}
+  if(visitRef){ try{ await updateDoc(visitRef, { duracionSeg: Math.round(activeSec), ultimaActividad: serverTimestamp() }); }catch(e){} }
+}
 
-  $("btnCancel").onclick = function () { clearForm(); };
-
-  $("list").onclick = function (e) {
-    var t = e.target;
-    if (!t) return;
-    var edit = t.getAttribute("data-edit");
-    var del = t.getAttribute("data-del");
-
-    if (edit) {
-      var r = null;
-      for (var i = 0; i < data.length; i++) if (data[i].id === edit) r = data[i];
-      if (!r) return;
-      $("editId").value = r.id;
-      $("nombre").value = r.nombre;
-      $("unidades").value = r.unidades;
-      $("pago").value = r.pago;
-      $("debe").value = r.debe;
-      $("nota").value = r.nota || "";
-      updateTotalView();
-      $("formTitle").textContent = "Editar venta";
-      $("btnSave").textContent = "Actualizar";
-      $("btnCancel").style.display = "block";
-      window.scrollTo(0, 0);
+/* ================= PANEL ADMIN (Configuración) ================= */
+let aUsers = new Map(), aPriv = new Map(), aVis = [], aRep = [], aUnsubs = [], aTab = "res", aSel = null, pinFails = 0, pinLockUntil = 0;
+function openAdmin(){
+  if(!isAdm) return;
+  $("adm").classList.add("on"); $("admGate").style.display = ""; $("admMain").style.display = "none"; $("admPin").value = ""; setMsg("admMsg", "");
+  setTimeout(() => { try{ $("admPin").focus(); }catch(e){} }, 120);
+}
+function admClose(){ admStop(); $("adm").classList.remove("on"); closeOv("ovAdm"); }
+async function admPinGo(){
+  if(!isAdm) return;
+  if(Date.now() < pinLockUntil) return setMsg("admMsg", "Demasiados intentos. Espera " + Math.ceil((pinLockUntil - Date.now()) / 1000) + " s.");
+  const v = $("admPin").value.trim(); if(!v) return;
+  if((await hashText(v)) === CODE_HASH){ pinFails = 0; $("admPin").value = ""; setMsg("admMsg", ""); $("admGate").style.display = "none"; $("admMain").style.display = "flex"; admStart(); setATab("res"); }
+  else{ pinFails++; $("admPin").value = ""; if(pinFails >= 5){ pinLockUntil = Date.now() + 60000; pinFails = 0; setMsg("admMsg", "Código incorrecto. Bloqueado 60 s."); } else setMsg("admMsg", "Código incorrecto."); }
+}
+function admStop(){ aUnsubs.forEach((f) => { try{ f(); }catch(e){} }); aUnsubs = []; aUsers = new Map(); aPriv = new Map(); aVis = []; aRep = []; aSel = null; }
+function admStart(){
+  admStop();
+  const err = (e) => { console.log("Admin:", e); $("abody").innerHTML = `<div class="empty">Sin permiso para leer los datos.<br>Publica las reglas de Firestore v15 e inicia sesión con el correo de administrador.</div>`; };
+  const opt = { serverTimestamps:"estimate" };
+  aUnsubs = [
+    onSnapshot(query(collection(db, "wm_users"), orderBy("creado", "desc"), limit(500)), (s) => { aUsers = new Map(s.docs.map((d) => [d.id, { uid:d.id, ...d.data(opt) }])); aRender(); }, err),
+    onSnapshot(query(collection(db, "wm_priv"), limit(500)), (s) => { aPriv = new Map(s.docs.map((d) => [d.id, d.data(opt)])); aRender(); }, () => {}),
+    onSnapshot(query(collection(db, "wm_visitas"), orderBy("creado", "desc"), limit(100)), (s) => { aVis = s.docs.map((d) => ({ id:d.id, ...d.data(opt) })); aRender(); }, () => {}),
+    onSnapshot(query(collection(db, "wm_reportes"), orderBy("creado", "desc"), limit(100)), (s) => { aRep = s.docs.map((d) => ({ id:d.id, ...d.data(opt) })); aRender(); }, () => {})
+  ];
+}
+function setATab(t){
+  aTab = t; document.querySelectorAll('[data-act="atab"]').forEach((b) => b.classList.toggle("on", b.dataset.t === t));
+  const b = $("abody");
+  if(t === "usr") b.innerHTML = `<div class="srch" style="padding:8px 0"><svg class="i" viewBox="0 0 24 24" style="left:13px"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="aq" type="search" placeholder="Buscar por nombre, ID, correo o IP" autocomplete="off"></div><div id="ulist"></div>`;
+  else b.innerHTML = `<div id="acont"></div>`;
+  aRender();
+}
+const aName = (uid) => { const u = aUsers.get(uid); return u ? `${u.nombre} (ID ${u.id})` : uid; };
+const isToday = (t) => t && sameDay(t, Date.now());
+function aRender(){
+  const nr = aRep.filter((r) => r.estado === "nuevo").length; const rn = $("repN"); if(rn){ rn.textContent = nr; rn.hidden = !nr; }
+  if(!$("adm").classList.contains("on") || $("admMain").style.display === "none") return;
+  if(aTab === "res") renderRes(); else if(aTab === "usr") renderUsers(); else if(aTab === "vis") renderVis(); else renderRep();
+  if(aSel && $("ovAdm").classList.contains("on") && $("shAdm").dataset.k === "u") userSheet(aSel, true);
+}
+function renderRes(){
+  const c = $("acont"); if(!c) return;
+  const us = [...aUsers.values()], on = us.filter((u) => u.estado === "activo" && Date.now() - ms(u.ultimaConexion) < ONLINE_MS).length;
+  const st = [["Usuarios", us.length], ["En línea ahora", on], ["Nuevos hoy", us.filter((u) => isToday(ms(u.creado))).length], ["Visitas hoy (últ. 100)", aVis.filter((v) => isToday(ms(v.creado))).length],
+    ["Suspendidos / bloqueados", us.filter((u) => u.estado === "suspendido" || u.estado === "bloqueado").length], ["Reportes nuevos", aRep.filter((r) => r.estado === "nuevo").length]];
+  const byC = {}; aVis.forEach((v) => { const k = v.codigoPais || "?"; byC[k] = (byC[k] || 0) + 1; });
+  const top = Object.entries(byC).sort((a, b) => b[1] - a[1]).slice(0, 6);
+  c.innerHTML = `<div class="stats">${st.map(([l, n]) => `<div class="stat"><b>${n}</b><span>${l}</span></div>`).join("")}</div>
+    <div class="acard"><h4>Países (últimas visitas)</h4>${top.length ? top.map(([k, n]) => `<div class="kv"><span>${flagOf(k)} ${esc(k)}</span><span>${n}</span></div>`).join("") : '<span style="color:var(--mut)">Sin datos todavía.</span>'}</div>
+    <div class="acard"><h4>Últimos registros</h4>${us.slice(0, 5).map((u) => `<div class="kv"><span>${esc(u.nombre)} <span class="pill ${esc(u.estado)}">${esc(u.estado)}</span></span><span>ID ${esc(u.id)} · ${esc(fmtList(ms(u.creado)))}</span></div>`).join("") || '<span style="color:var(--mut)">Aún no hay usuarios.</span>'}</div>`;
+}
+function renderUsers(){
+  const L = $("ulist"); if(!L) return; const q = (($("aq") && $("aq").value) || "").trim().toLowerCase();
+  let us = [...aUsers.values()];
+  if(q) us = us.filter((u) => { const p = aPriv.get(u.uid) || {}; return [u.nombre, u.id, p.email, p.ip].some((x) => String(x || "").toLowerCase().includes(q)); });
+  L.innerHTML = us.length ? us.map((u) => { const p = aPriv.get(u.uid) || {}, on = u.estado === "activo" && Date.now() - ms(u.ultimaConexion) < ONLINE_MS;
+    const cc = (p.datosVisita && p.datosVisita.codigoPais) || "";
+    return `<button class="row" data-act="auser" data-u="${esc(u.uid)}">${av(u.nombre, u.foto)}<div class="mid"><div class="nm">${esc(u.nombre)}<span class="pill ${esc(u.estado)}">${esc(u.estado)}</span></div><div class="sub">ID ${esc(u.id)} · ${esc(p.email || "")}</div><div class="sub">${flagOf(cc)} ${esc([p.ciudad, p.pais].filter(Boolean).join(", ") || "—")}${p.ip ? " · " + esc(p.ip) : ""}</div></div><div class="meta"><span style="color:${on ? "var(--ok)" : "var(--mut)"}">${on ? "en línea" : esc(fmtList(ms(u.ultimaConexion)))}</span></div></button>`; }).join("")
+    : `<div class="empty">${q ? "Sin resultados." : "Aún no hay usuarios registrados."}</div>`;
+}
+function renderVis(){
+  const c = $("acont"); if(!c) return;
+  c.innerHTML = aVis.length ? aVis.map((v) => `<div class="acard"><b>${esc(v.nombre || "—")}</b> <span style="color:var(--mut)">· ${esc(v.email || "")}</span><br>
+    ${flagOf(v.codigoPais)} ${esc([v.ciudad, v.region, v.pais].filter(Boolean).join(", "))} · IP <b>${esc(v.ip)}</b><br>
+    <span style="color:var(--mut)">${esc(v.dispositivo || "")} ${esc(v.modelo || "")} · ${esc(v.so || "")} · ${esc(v.navegador || "")} ${esc(v.navegadorVersion || "")} · ${esc(v.resolucion || "")}</span><br>
+    <span style="color:var(--mut)">${esc(fmtFull(ms(v.creado)))} · duración ${esc(fmtDur(v.duracionSeg))} · ISP ${esc(v.isp || "—")}</span></div>`).join("") : `<div class="empty">Aún no hay visitas registradas.</div>`;
+}
+function renderRep(){
+  const c = $("acont"); if(!c) return;
+  c.innerHTML = aRep.length ? aRep.map((r) => `<div class="acard"><span class="pill ${esc(r.estado)}" style="margin:0">${esc(r.estado)}</span> <b>${esc(r.motivo)}</b> <span style="color:var(--mut)">· ${esc(fmtFull(ms(r.creado)))}</span><br>
+    Reporta: <b>${esc(aName(r.reportante))}</b><br>Reportado: <b>${esc(aName(r.reportado))}</b>
+    ${r.detalle ? `<div class="ml">${esc(r.detalle)}</div>` : ""}
+    <h4 style="margin-top:10px">Mensajes del chat</h4>${(r.mensajes || []).map((m) => `<div class="ml"><b>${m.de === r.reportante ? "Reportante" : "Reportado"}</b> · ${esc(fmtT(m.ts))}: ${esc(m.t)}</div>`).join("") || '<span style="color:var(--mut)">Sin mensajes.</span>'}
+    <div class="acts"><button class="btn sm ghost" data-act="auser" data-u="${esc(r.reportado)}">Ver usuario</button>${r.estado === "nuevo" ? `<button class="btn sm ok" data-act="repDone" data-r="${esc(r.id)}">Marcar revisado</button>` : ""}<button class="btn sm bad" data-act="repDel" data-r="${esc(r.id)}">Borrar</button></div></div>`).join("") : `<div class="empty"><div class="big">🎉</div>No hay reportes.</div>`;
+}
+const VL = { ip:"IP", pais:"País", region:"Región", ciudad:"Ciudad", continente:"Continente", codigoPostal:"Código postal", isp:"Proveedor (ISP)", asn:"ASN", zonaHoraria:"Zona horaria", dispositivo:"Dispositivo", modelo:"Modelo", so:"Sistema", navegador:"Navegador", navegadorVersion:"Versión navegador", resolucion:"Pantalla", viewport:"Ventana", dpr:"DPR", idioma:"Idioma", memoriaGB:"Memoria (GB)", nucleos:"Núcleos", tactil:"Puntos táctiles", conexion:"Conexión", referrer:"Llegó desde", fecha:"Fecha", hora:"Hora" };
+async function userSheet(uid, refresh){
+  aSel = uid; const u = aUsers.get(uid); if(!u) return;
+  const p = aPriv.get(uid) || {}, v = p.datosVisita || {}, self = uid === me(), a = ageOf(p.nacimiento);
+  const btns = [];
+  if(!self && u.estado !== "eliminado"){
+    if(u.estado === "activo"){ btns.push(`<button class="btn sm bad" data-act="aset" data-u="${esc(uid)}" data-s="suspendido">Suspender</button>`, `<button class="btn sm bad" data-act="aset" data-u="${esc(uid)}" data-s="bloqueado">Bloquear</button>`); }
+    else btns.push(`<button class="btn sm ok" data-act="aset" data-u="${esc(uid)}" data-s="activo">Reactivar</button>`);
+    btns.push(`<button class="btn sm bad" data-act="adel" data-u="${esc(uid)}">Eliminar</button>`);
+  }
+  const rows = (o) => Object.entries(o).filter(([k, x]) => x !== "" && x != null && typeof x !== "object" && !["lat", "lon", "offsetMin", "codigoPais"].includes(k)).map(([k, x]) => `<div class="kv"><span>${esc(VL[k] || k)}</span><span>${esc(x)}</span></div>`).join("");
+  $("shAdm").dataset.k = "u";
+  $("shAdm").innerHTML = `<h2>Usuario<button class="ibtn" data-act="closeov" aria-label="Cerrar">${IC.x}</button></h2>
+    <div style="display:flex;gap:14px;align-items:center;margin:10px 0">${av(u.nombre, u.foto, "lg")}<div style="min-width:0"><div style="font-size:20px;font-weight:700">${esc(u.nombre)}<span class="pill ${esc(u.estado)}">${esc(u.estado)}</span></div><div style="color:var(--mut)">${esc(u.bio || "")}</div></div></div>
+    <div class="kv"><span>ID de usuario</span><span><b>${esc(u.id)}</b></span></div>
+    <div class="kv"><span>UID</span><span style="font-size:12px">${esc(uid)}</span></div>
+    <div class="kv"><span>Correo</span><span>${esc(p.email || "—")}</span></div>
+    <div class="kv"><span>Registro con</span><span>${esc(p.proveedor === "google.com" ? "Google" : p.proveedor === "password" ? "Correo y contraseña" : p.proveedor || "—")}</span></div>
+    <div class="kv"><span>Nacimiento</span><span>${esc(p.nacimiento || "—")}${a >= 0 ? " (" + a + " años)" : ""}</span></div>
+    <div class="kv"><span>Creado</span><span>${esc(fmtFull(ms(u.creado)))}</span></div>
+    <div class="kv"><span>Última conexión</span><span>${esc(fmtFull(ms(u.ultimaConexion)))}</span></div>
+    <div class="kv"><span>Último ingreso</span><span>${esc(fmtFull(ms(p.ultimoIngreso)))}</span></div>
+    <div class="kv"><span>N.º de ingresos</span><span>${esc(p.nVisitas ?? 0)}</span></div>
+    ${v.lat != null && v.lon != null ? `<div class="kv"><span>Coordenadas</span><span><a style="color:var(--acc)" target="_blank" rel="noopener noreferrer" href="https://www.google.com/maps?q=${encodeURIComponent(v.lat + "," + v.lon)}">${esc(v.lat + ", " + v.lon)}</a></span></div>` : ""}
+    ${btns.length ? `<div class="acts">${btns.join("")}</div>` : ""}
+    <h4 style="margin:18px 0 2px;color:var(--mut);font-size:13px;text-transform:uppercase;letter-spacing:.5px">Datos de la última visita</h4>${rows(v) || '<span style="color:var(--mut)">Sin datos.</span>'}
+    <h4 style="margin:18px 0 2px;color:var(--mut);font-size:13px;text-transform:uppercase;letter-spacing:.5px">Historial de visitas</h4><div id="uVis"><span style="color:var(--mut)">Cargando…</span></div>`;
+  openOv("ovAdm");
+  if(refresh) return;
+  try{
+    const s = await getDocs(query(collection(db, "wm_visitas"), where("uid", "==", uid)));
+    const vs = s.docs.map((d) => d.data({ serverTimestamps:"estimate" })).sort((x, y) => ms(y.creado) - ms(x.creado)).slice(0, 15), box = $("uVis");
+    if(box && aSel === uid) box.innerHTML = vs.length ? vs.map((x) => `<div class="ml">${esc(fmtFull(ms(x.creado)))} · ${flagOf(x.codigoPais)} ${esc(x.ciudad || "")} · IP ${esc(x.ip)} · ${esc(x.dispositivo || "")} ${esc(x.navegador || "")} · ${esc(fmtDur(x.duracionSeg))}</div>`).join("") : '<span style="color:var(--mut)">Sin visitas.</span>';
+  }catch(e){ const box = $("uVis"); if(box) box.textContent = "No se pudo cargar."; }
+}
+async function setEstado(uid, st){
+  const u = aUsers.get(uid); if(!u || uid === me()) return;
+  const txt = { suspendido:"suspender", bloqueado:"bloquear", activo:"reactivar" }[st];
+  if(!confirm(`¿Quieres ${txt} a ${u.nombre} (ID ${u.id})?`)) return;
+  try{ await updateDoc(doc(db, "wm_users", uid), { estado: st }); toast("Listo ✅"); }catch(e){ console.log(e); toast("No se pudo actualizar. ¿Reglas v15 publicadas?"); }
+}
+async function delUser(uid){
+  const u = aUsers.get(uid); if(!u || uid === me()) return;
+  if(!confirm(`¿ELIMINAR la cuenta de ${u.nombre} (ID ${u.id})?\n\nSe borrarán sus chats, mensajes y datos personales. No se puede deshacer.`)) return;
+  if((prompt('Para confirmar escribe: ELIMINAR') || "").trim() !== "ELIMINAR") return toast("Cancelado");
+  try{
+    const cs = await getDocs(query(collection(db, "wm_chats"), where("miembros", "array-contains", uid)));
+    for(const c of cs.docs){
+      const ms_ = await getDocs(collection(db, "wm_chats", c.id, "msgs"));
+      for(let i = 0; i < ms_.docs.length; i += 400){ const b = writeBatch(db); ms_.docs.slice(i, i + 400).forEach((d) => b.delete(d.ref)); await b.commit(); }
+      await deleteDoc(c.ref);
     }
+    const p = aPriv.get(uid) || {};
+    await updateDoc(doc(db, "wm_users", uid), { estado:"eliminado", nombre:"Cuenta eliminada", foto:"", bio:"", eliminadoEn: serverTimestamp() });
+    await setDoc(doc(db, "wm_priv", uid), { email: p.email || "", eliminado:true, creado: p.creado || serverTimestamp() });
+    toast("Cuenta eliminada ✅ (borra también su acceso en Firebase → Authentication)");
+  }catch(e){ console.log(e); toast("No se pudo eliminar por completo. Inténtalo de nuevo."); }
+}
+async function repSet(id, done){
+  try{ if(done) await updateDoc(doc(db, "wm_reportes", id), { estado:"revisado" }); else if(confirm("¿Borrar este reporte?")) await deleteDoc(doc(db, "wm_reportes", id)); }catch(e){ toast("No se pudo actualizar el reporte."); }
+}
 
-    if (del) {
-      if (!confirm("¿Borrar este registro?")) return;
-      data = data.filter(function (x) { return x.id !== del; });
-      if (!persist()) return;
-      if ($("editId").value === del) clearForm();
-      render();
-      showMsg("Registro borrado");
-    }
-  };
+/* ================= EVENTOS ================= */
+const A = {
+  retry: () => { scr("boot"); route(); }, google: googleLogin, amode: (t) => setAmode(t.dataset.m), forgot, vcheck: verCheck, vresend: verResend, logout,
+  pickAv: (t) => { avTarget = t.dataset.t; $("avFile").click(); }, onbGo: createProfile, legal: () => openOv("ovLegal"),
+  closeov: (t) => t.closest(".ov").classList.remove("on"), profile: () => openProfile(),
+  copyId: () => { const id = prof && prof.id; if(!id) return; (navigator.clipboard ? navigator.clipboard.writeText(id) : Promise.reject()).then(() => toast("ID copiado"), () => { try{ prompt("Copia tu ID:", id); }catch(e){} }); },
+  saveProf: saveProfile, ptab: (t) => setPtab(t.dataset.t), open: (t) => openChat(t.dataset.c),
+  accept: (t) => answerReq(t.dataset.c, true), reject: (t) => answerReq(t.dataset.c, false),
+  connect: (t) => connectSheet(t.dataset.u), sendReq: (t) => sendReq(t.dataset.u),
+  back: () => { if(history.state && history.state.wm){ history.back(); } else closeChatUI(); },
+  info: infoSheet, saveAp: saveApodo, block: () => setBlock(true), unblock: () => setBlock(false), repForm: reportForm, repSend: sendReport,
+  older: () => { msgLimit += 40; olderFlag = true; subMsgs(); },
+  admin: openAdmin, admClose, admPin: admPinGo, atab: (t) => setATab(t.dataset.t), auser: (t) => userSheet(t.dataset.u),
+  aset: (t) => setEstado(t.dataset.u, t.dataset.s), adel: (t) => delUser(t.dataset.u), repDone: (t) => repSet(t.dataset.r, true), repDel: (t) => repSet(t.dataset.r, false)
+};
+document.addEventListener("click", (e) => {
+  const t = e.target.closest("[data-act]");
+  if(t && A[t.dataset.act]){ A[t.dataset.act](t); return; }
+  if(e.target.classList && e.target.classList.contains("ov") && e.target.hasAttribute("data-close")) e.target.classList.remove("on");
+});
+document.addEventListener("keydown", (e) => {
+  if(e.key === "Escape"){ const o = [...document.querySelectorAll(".ov.on")].pop(); if(o) o.classList.remove("on"); }
+  if(e.key === "Enter" && e.target && e.target.id === "admPin"){ e.preventDefault(); admPinGo(); }
+});
+document.addEventListener("input", (e) => { if(e.target.id === "aq") renderUsers(); });
+$("aForm").addEventListener("submit", emailSubmit);
+$("avFile").addEventListener("change", onAvatarFile);
+$("q").addEventListener("input", onSearch);
+$("onbNm").addEventListener("input", () => { if(!photo.onb) paintOnbAv(); });
+window.addEventListener("popstate", () => { if(cur) closeChatUI(); });
+if(window.visualViewport){
+  const f = () => { document.documentElement.style.setProperty("--vh", window.visualViewport.height + "px"); if(window.scrollY) window.scrollTo(0, 0); };
+  window.visualViewport.addEventListener("resize", f); window.visualViewport.addEventListener("scroll", f); f();
+}
+setAmode("in");
 
-  $("unidades").oninput = function () {
-    updateTotalView();
-    suggestDebe();
-  };
-  $("pago").oninput = suggestDebe;
-
-  $("search").oninput = function () {
-    filter = this.value;
-    render();
-  };
-
-  loadData();
-  render();
-})();
 </script>
 </body>
 </html>
