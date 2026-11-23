@@ -250,27 +250,6 @@ html[data-theme=ios] .side{background:#fff}
 html[data-theme=ios] .sysm,html[data-theme=ios] .day{background:#efeff4;color:#6e6e73}
 html[data-theme=ios] .welcome b{color:#000!important}
 /* Android (Material oscuro verde) */
-html[data-theme=android]{--bg:#0b141a;--card:#111b21;--card2:#1f2c34;--line:#1f2c34;--txt:#e9edef;--mut:#8696a0;--acc:#00a884;--acc2:#06cf9c}
-html[data-theme=android] body{font-family:Roboto,"Segoe UI",system-ui,Helvetica,Arial,sans-serif}
-html[data-theme=android] .btn{background:#00a884;color:#06130f;border-radius:24px}
-html[data-theme=android] .btn.ghost{background:#1f2c34;color:#e9edef}
-html[data-theme=android] .logo{background:linear-gradient(135deg,#00a884,#06cf9c);box-shadow:0 12px 40px rgba(0,168,132,.3)}
-html[data-theme=android] .in,html[data-theme=android] .grp,html[data-theme=android] .tabs2{background:#111b21}
-html[data-theme=android] .sheet,html[data-theme=android] .card{background:#111b21}
-html[data-theme=android] .mh,html[data-theme=android] .comp{background:#202c33;border-color:#202c33}
-html[data-theme=android] .srch input,html[data-theme=android] .ptabs button{background:#202c33;border-color:transparent}
-html[data-theme=android] .ptabs button.on{background:rgba(0,168,132,.18);color:#00d9a7;border-color:rgba(0,168,132,.5)}
-html[data-theme=android] .msgs{background:#0b141a}
-html[data-theme=android] .b{border-radius:10px;font-size:15px}
-html[data-theme=android] .b.me{background:#005c4b;border-radius:10px 10px 3px 10px}
-html[data-theme=android] .b.him{background:#202c33;border-radius:10px 10px 10px 3px}
-html[data-theme=android] .comp textarea{background:#2a3942;border-color:transparent;border-radius:24px}
-html[data-theme=android] .send{background:#00a884;border-radius:50%}
-html[data-theme=android] .row{border-bottom-color:#15222a}
-html[data-theme=android] .row:active,html[data-theme=android] .row.sel{background:#182229}
-html[data-theme=android] .selb{background:#1d3a35}
-html[data-theme=android] .b.sel{outline-color:#00d9a7}
-html[data-theme=android] .b .tm.rd{color:#53bdeb}
 html[data-theme=ios] .ibtn{background:#e9e9ee;color:#007aff}
 html[data-theme=ios] .back{background:transparent}
 
@@ -356,7 +335,6 @@ html[data-theme=ios] .vnote{background:#fff;color:#000;border-color:#d1d1d6}
 .thm button{position:absolute;top:-8px;right:-8px;width:24px;height:24px;border-radius:50%;border:0;background:#ff453a;color:#fff;font-size:16px;line-height:1}
 .intro{text-align:center;padding:10px 6px}.intro .ib{width:64px;height:64px;border-radius:50%;background:rgba(10,132,255,.16);color:var(--acc);display:grid;place-items:center;margin:8px auto 4px}.intro .ib svg{width:30px;height:30px}.intro p{color:var(--mut);font-size:14.5px;line-height:1.5;margin:10px 4px}
 html[data-theme=ios] .pg{background:#f2f2f7}html[data-theme=ios] .pgrp,html[data-theme=ios] .pme{background:#fff}html[data-theme=ios] .pr{border-bottom-color:#efeff4}html[data-theme=ios] .pr:active{background:#e9e9ee}html[data-theme=ios] .chb{background:#e9e9ee}
-html[data-theme=android] .pg{background:#0b141a}html[data-theme=android] .pgrp,html[data-theme=android] .pme{background:#111b21}html[data-theme=android] .rb.on{border-color:#00a884}html[data-theme=android] .rb.on::after{background:#00a884}
 html[data-theme=iosdark] .pgrp,html[data-theme=iosdark] .pme{background:#1c1c1e}
 /* ===== tema iOS oscuro ===== */
 html[data-theme=iosdark]{--bg:#000;--card:#1c1c1e;--card2:#2c2c2e;--line:#38383a;--txt:#fff;--mut:#98989f;--acc:#0a84ff;--acc2:#5e5ce6}
@@ -479,7 +457,6 @@ html[data-theme=ios] .fab.sm{background:#f0f0f3}
 .pme .pt b{font-size:18px}
 html[data-theme=ios] .pgrp,html[data-theme=ios] .pme{background:#fff}
 html[data-theme=iosdark] .pgrp,html[data-theme=iosdark] .pme{background:#1c1c1e}
-html[data-theme=android] .pgrp,html[data-theme=android] .pme{background:#111b21}
 
 /* ---- fase 7: insignias, asistencia, modal ---- */
 .vb{width:18px;height:18px;vertical-align:-3px;margin-left:5px}
@@ -525,6 +502,82 @@ html[data-theme=ios] .botfoot{background:#f2f2f7}
 html[data-theme=ios] .sfil{background:#eeeef0}html[data-theme=ios] .sfil button.on{background:#fff;color:#000}
 html[data-theme=ios] .sres b{color:#000}
 #app.sm .srch svg{top:24px}#app.sm .srch .sx{top:22px}
+
+/* ---- fase 9: avatares, perfil, temas, ajustes ---- */
+.av.dflt{background:
+  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop offset='0' stop-color='%23fff' stop-opacity='.96'/%3E%3Cstop offset='1' stop-color='%23fff' stop-opacity='.72'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='50' cy='37' r='15.5' fill='url(%23g)'/%3E%3Cpath d='M20 98c0-19 13-32 30-32s30 13 30 32z' fill='url(%23g)'/%3E%3C/svg%3E") center 62%/88% no-repeat,
+  radial-gradient(circle at 28% 18%,hsl(var(--h,210) 85% 70%),hsl(calc(var(--h,210) + 32) 70% 42%) 70%)!important;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.16),inset 0 -8px 16px rgba(0,0,0,.18)}
+.av.dflt.grp{background:
+  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cg fill='%23fff'%3E%3Ccircle cx='50' cy='36' r='12.5' fill-opacity='.97'/%3E%3Cpath d='M26 80c0-15 10-25 24-25s24 10 24 25z' fill-opacity='.97'/%3E%3Ccircle cx='24' cy='42' r='8.5' fill-opacity='.7'/%3E%3Ccircle cx='76' cy='42' r='8.5' fill-opacity='.7'/%3E%3Cpath d='M6 76c0-11 7-19 17-19 3 0 5 .6 7 1.6-5 4-8 10-8.6 17.4zM94 76c0-11-7-19-17-19-3 0-5 .6-7 1.6 5 4 8 10 8.6 17.4z' fill-opacity='.7'/%3E%3C/g%3E%3C/svg%3E") center/78% no-repeat,
+  radial-gradient(circle at 28% 18%,hsl(var(--h,150) 80% 62%),hsl(calc(var(--h,150) + 40) 65% 38%) 70%)!important}
+/* perfil de otra persona */
+.pg[data-p=peer]{--t:0;--sy:0px}
+.pcb{position:absolute;top:0;left:0;right:0;z-index:5;display:flex;align-items:center;gap:10px;padding:calc(env(safe-area-inset-top,0px) + 10px) 12px 10px;background:rgb(8 8 11/calc(var(--t) * .94));backdrop-filter:blur(calc(var(--t) * 14px));box-shadow:0 1px 0 rgb(255 255 255/calc(var(--t) * .07))}
+.pcbb{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;color:#fff;background:rgba(0,0,0,calc(.45 - var(--t) * .45));flex:none;transition:transform .15s}
+.pcbb:active{transform:scale(.9)}.pcbb svg{width:22px;height:22px}
+.pcbb:first-child svg{fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.pcbm{flex:1;min-width:0;display:flex;align-items:center;gap:10px;opacity:var(--t);transform:translateY(calc((1 - var(--t)) * 10px))}
+.pcbm .av{width:38px;height:38px}.pcbm b{font-size:18px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:center}
+.pcs{padding:0!important;animation:none!important}
+.pcs>*{max-width:none!important}
+.pcv{position:relative;height:calc(210px + env(safe-area-inset-top,0px));overflow:hidden;background:radial-gradient(circle at 25% 20%,hsl(var(--h,220) 70% 38%),hsl(calc(var(--h,220) + 40) 55% 14%) 75%)}
+.pcimg{position:absolute;inset:-30px;background:center/cover no-repeat;filter:blur(16px) saturate(1.25) brightness(.78);transform:translateY(calc(var(--sy) * .45)) scale(1.1)}
+.pcfade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.35),transparent 40%,var(--pcbg,#000) 100%)}
+.pchead{position:relative;margin-top:-62px;text-align:center;padding:0 16px 6px;z-index:2}
+.pcav{width:118px;height:118px;margin:0 auto;border-radius:50%;padding:4px;background:var(--pcbg,#000);box-shadow:0 8px 26px rgba(0,0,0,.5);transform:scale(calc(1 - var(--t) * .35));opacity:calc(1 - var(--t));animation:pcpop .5s cubic-bezier(.2,.9,.3,1.25) both}
+.pcav .av{width:100%;height:100%;font-size:40px}
+@keyframes pcpop{from{transform:scale(.6);opacity:0}}
+.pchead h1{margin:12px 0 0;font-size:25px;font-weight:800;letter-spacing:-.3px;display:flex;justify-content:center;align-items:center;gap:2px;flex-wrap:wrap}
+.pchead h1 .vb{width:22px;height:22px}.pchead .you{font-weight:500;color:var(--mut);font-size:21px;margin-left:4px}
+.pcu{color:#8fa6f2;font-size:15px;margin-top:3px;font-weight:600}
+.pcact{display:flex;justify-content:center;gap:16px;margin:20px 0 6px}
+.pcact button{display:flex;flex-direction:column;align-items:center;gap:7px;color:inherit;font-size:13px;font-weight:600;min-width:74px}
+.pcact button span{width:62px;height:46px;border-radius:23px;display:grid;place-items:center;background:linear-gradient(145deg,#2c2c31,#1d1d21);box-shadow:inset 0 0 0 1px rgba(255,255,255,.07);transition:transform .15s,background .2s}
+.pcact button:active span{transform:scale(.92);background:#34343a}
+.pcact button svg{width:23px;height:23px;fill:none;stroke:#e9e9ee;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.pcg{animation:pgin .45s .12s both}
+.pcg a.pr{text-decoration:none}
+.pr.c-wa{--c1:#3ee26b;--c2:#12a94a}.pr.c-ig{--c1:#feda75;--c2:#d62976}.pr.c-ig .pi{background:linear-gradient(135deg,#feda75,#fa7e1e 30%,#d62976 60%,#962fbf)}
+.pr.c-wa .pi svg,.pr.c-ig .pi svg{fill:none;stroke:#fff;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.pr .pt b{overflow-wrap:anywhere}
+html[data-theme=ios] .pg[data-p=peer]{--pcbg:#f2f2f7}html[data-theme=ios] .pcb{background:rgb(242 242 247/calc(var(--t) * .94));color:#000}html[data-theme=ios] .pcbb{color:#000;background:rgba(255,255,255,calc(.7 - var(--t) * .7))}
+html[data-theme=ios] .pcact button span{background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.08)}html[data-theme=ios] .pcact button svg{stroke:#1c1c1e}
+html[data-theme=iosdark] .pg[data-p=peer]{--pcbg:#000}
+/* temas */
+.thg{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 14px 0}
+.thc{position:relative;display:flex;flex-direction:column;align-items:center;gap:8px;padding:8px 6px 10px;border-radius:16px;background:#141416;box-shadow:inset 0 0 0 1.5px transparent;transition:box-shadow .2s,transform .15s;color:inherit;font-size:12.5px;font-weight:600}
+.thc:active{transform:scale(.96)}.thc.on{box-shadow:inset 0 0 0 2px var(--acc)}
+.thp{display:block;position:relative;width:100%;aspect-ratio:3/4;border-radius:11px;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(255,255,255,.1)}
+.thp i{position:absolute;display:block;height:16%;border-radius:7px}
+.thp .b1{left:10%;top:20%;width:52%}.thp .b2{right:10%;top:45%;width:56%}.thp .b3{left:10%;top:70%;width:40%}
+.t-default{background:#08080b}.t-default .b1,.t-default .b3{background:#26262b}.t-default .b2{background:#7c4dff}
+.t-iosdark{background:#000}.t-iosdark .b1,.t-iosdark .b3{background:#2c2c2e}.t-iosdark .b2{background:#0a84ff}
+.t-ios{background:#fff}.t-ios .b1,.t-ios .b3{background:#e9e9eb}.t-ios .b2{background:#007aff}
+.thk{position:absolute;top:12px;right:12px;width:22px;height:22px;border-radius:50%;background:var(--acc);display:grid;place-items:center;transform:scale(0);transition:transform .25s cubic-bezier(.2,.9,.3,1.4)}
+.thc.on .thk{transform:scale(1)}.thk svg{width:14px;height:14px;fill:none;stroke:#fff;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round}
+html[data-theme=ios] .thc{background:#fff}
+/* ajustes más nítidos */
+.pme{background:linear-gradient(135deg,rgba(124,77,255,.22),rgba(29,140,255,.12) 55%,#0f0f12);box-shadow:inset 0 0 0 1px rgba(255,255,255,.07)}
+.pme .av{box-shadow:0 0 0 3px rgba(255,255,255,.1)}
+.pgt{color:#8e93a3;font-weight:700;letter-spacing:.8px;font-size:11.5px}
+.pgrp{box-shadow:inset 0 0 0 1px rgba(255,255,255,.05)}
+.pgc>.pgrp,.pgc>.pme,.pgc>.thg{animation:pgin .45s both}
+.pgc>*:nth-child(2){animation-delay:.05s}.pgc>*:nth-child(3){animation-delay:.1s}.pgc>*:nth-child(4){animation-delay:.15s}.pgc>*:nth-child(5){animation-delay:.2s}
+.pr{transition:background .15s,transform .12s}.pr:active{transform:scale(.99)}
+.pr .pi{transition:transform .2s}.pr:active .pi{transform:scale(.9) rotate(-4deg)}
+.rb.on{box-shadow:0 0 0 3px rgba(77,155,255,.2)}
+.chb{transition:background .2s,color .2s,transform .12s}.chb:active{transform:scale(.95)}
+.chb.on{background:linear-gradient(135deg,#4d9bff,#5e5ce6)!important;color:#fff!important;border-color:transparent!important}
+.sw{transition:transform .15s,box-shadow .2s}.sw.on{box-shadow:0 0 0 3px var(--bg,#000),0 0 0 5px #fff;transform:scale(1.08)}
+.pgh h2{font-size:22px;letter-spacing:-.3px}
+.pgh .ibtn{background:#17171b;border-radius:50%}
+html[data-theme=iosdark] .pgrp,html[data-theme=iosdark] .pme,html[data-theme=iosdark] .thc{background:#1c1c1e}
+html[data-theme=iosdark] .pg{background:#000}
+html[data-theme=ios] .pme{background:linear-gradient(135deg,rgba(124,77,255,.14),rgba(29,140,255,.1) 55%,#fff)}
+html[data-theme=ios] .pgh .ibtn{background:#e5e5ea}
+html[data-theme=ios] .side,html[data-theme=ios] .top,html[data-theme=ios] .srch,html[data-theme=ios] .shell,html[data-theme=ios] .list{background:#fff}
+html[data-theme=ios] .top h1{color:#000}html[data-theme=ios] .list .row .sub{color:#4a6cf0}html[data-theme=ios] .arow .nm.mut{color:#6b6b72}
 
 </style>
 </head>
@@ -735,11 +788,11 @@ const IC = {
 };
 const hue = (s) => { let h = 0; for(const c of String(s || "?")) h = (h * 31 + c.charCodeAt(0)) % 360; return h; };
 const photoOk = (f) => typeof f === "string" && f.startsWith("data:image/jpeg;base64,");   // solo se muestran fotos propias (JPEG incrustado)
-const avG = (name, foto, cls = "") => photoOk(foto) ? av(name, foto, cls) : `<div class="av ${cls} dflt grp" role="img" aria-label="Grupo"></div>`;
+const avG = (name, foto, cls = "") => photoOk(foto) ? av(name, foto, cls) : `<div class="av ${cls} dflt grp" role="img" aria-label="Grupo" style="--h:${hue(name)}"></div>`;
 const av = (name, foto, cls = "") => {
   const n = String(name || "?").trim();
   return photoOk(foto) ? `<div class="av ${cls}" style="background-image:url('${esc(foto)}')"></div>`
-    : `<div class="av ${cls} dflt" role="img" aria-label="Sin foto de perfil"></div>`;
+    : `<div class="av ${cls} dflt" role="img" aria-label="Sin foto de perfil" style="--h:${hue(name)}"></div>`;
 };
 const SEAL = (() => { let d = ""; for(let k = 0; k <= 160; k++){ const t = k / 160 * 2 * Math.PI, r = 10.55 + 0.62 * Math.cos(8 * t); d += (k ? "L" : "M") + (12 + r * Math.cos(t)).toFixed(2) + " " + (12 + r * Math.sin(t)).toFixed(2); } return d + "Z"; })();
 const SEALC = { "#1d8cff": ["#4db2ff", "#1275ec", "sB"], "#f0423c": ["#ff7469", "#d92a2f", "sR"] };
@@ -1116,8 +1169,8 @@ function updateBadges(){
   const an = [...chats.values()].filter((c) => isArch(c) && unreadOf(c) && !isDel(c)).length, ab = $("archN"); if(ab){ ab.textContent = an; ab.hidden = !an; }
   document.title = (un + r ? `(${un + r}) ` : "") + "WarMess · By Sxgura Inc";
 }
-const THEMES = [["default", "Predeterminado"], ["iosdark", "iOS oscuro"], ["ios", "iOS claro"], ["android", "Android"]];
-const applyTheme = (t) => { if(!THEMES.some((x) => x[0] === t)) t = "default"; document.documentElement.dataset.theme = t; try{ const m = document.querySelector('meta[name="theme-color"]'); if(m) m.content = t === "iosdark" ? "#000000" : t === "ios" ? "#ffffff" : t === "android" ? "#202c33" : "#08080b"; }catch(e){} };
+const THEMES = [["default", "Predeterminado"], ["iosdark", "iOS oscuro"], ["ios", "iOS claro"]];
+const applyTheme = (t) => { if(!THEMES.some((x) => x[0] === t)) t = "default"; document.documentElement.dataset.theme = t; try{ const m = document.querySelector('meta[name="theme-color"]'); if(m) m.content = t === "iosdark" ? "#000000" : t === "ios" ? "#ffffff" : "#08080b"; }catch(e){} };
 applyTheme(store.get("wm_theme", "default"));
 let actx = null;
 const TONES = [["Clásico", [880]], ["Gota", [660, 990]], ["Burbuja", [520, 780, 1040]]];
@@ -2415,7 +2468,7 @@ applyLook();
 /* --- pila de páginas con animación --- */
 function pgPaint(e){
   if(!prof || !user) return; const d = PG[e.name](e.arg);
-  const html = `<header class="pgh"><button class="ibtn" data-act="pgBack" aria-label="Atrás">${IC.back}</button><h2>${d.t}</h2></header><div class="pgc">${d.h}</div>`;
+  const html = d.bare ? d.h : `<header class="pgh"><button class="ibtn" data-act="pgBack" aria-label="Atrás">${IC.back}</button><h2>${d.t}</h2></header><div class="pgc">${d.h}</div>`;
   if(e.last === html) return; e.last = html;
   const old = e.el.querySelector(".pgc"), st = old ? old.scrollTop : 0;
   e.el.innerHTML = html; const n = e.el.querySelector(".pgc"); if(n && st) n.scrollTop = st;
@@ -2439,8 +2492,33 @@ function pgPop(fromHist){
 }
 function pgClear(){ pgStack.splice(0).forEach((e) => e.el.remove()); }
 
+
+const peerOf = () => { const c = chats.get(cur); return c && !isG(c) ? otherOf(c) : null; };
+function peerHTML(uid){
+  const p = peers.get(uid) || {}, self = uid === me(), foto = fotoOf(p), bio = p.bio && canSee(p, "bio") ? p.bio : "";
+  const row = (cls, ic, t, sub, href, act) => { const inner = `<span class="pi">${P(ic)}</span><span class="pt"><b>${t}</b>${sub ? `<small>${sub}</small>` : ""}</span>${href ? CHEV : ""}`; return href ? `<a class="pr c-${cls}" target="_blank" rel="noopener noreferrer" href="${esc(href)}">${inner}</a>` : `<div class="pr c-${cls}" ${act || ""}>${inner}</div>`; };
+  const wa = /^\d{7,15}$/.test(p.wa || "") ? p.wa : "", ig = /^[A-Za-z0-9._]{1,30}$/.test(p.ig || "") ? p.ig : "";
+  let ln = null; if(/^https:\/\//.test(p.link || "")){ try{ ln = new URL(p.link); }catch(e){} }
+  const info = [bio ? row("blue", I5.info, esc(bio), "Info") : "", wa ? row("green", I5.tel, "+" + wa, "Teléfono", "tel:+" + wa) : "", ln ? row("cyan", I5.link, esc(ln.hostname.replace(/^www\./, "")), "Enlace", ln.href) : "", row("indigo", I5.idc, esc(p.id || "—"), "ID · toca para copiar", "", 'data-act="peerCopy" role="button" tabindex="0" style="cursor:pointer"')].filter(Boolean).join("");
+  const soc = [wa ? row("wa", '<path d="M3.5 20.5l1.3-4.6A8.5 8.5 0 1 1 8 19.2z"/><path d="M9 8.5c.2 3 2.6 5.6 5.8 6.3l1.2-1.4-2-1-.9.7a4.5 4.5 0 0 1-2-2l.7-.9-1-2z"/>', "WhatsApp", "+" + wa, "https://wa.me/" + wa) : "", ig ? row("ig", '<rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".6"/>', "@" + esc(ig), "Instagram", "https://instagram.com/" + ig) : ""].filter(Boolean).join("");
+  return `<div class="pcb"><button class="pcbb" data-act="pgBack" aria-label="Atrás">${IC.back}</button><div class="pcbm">${av(p.nombre, foto, "xs")}<b>${esc(p.nombre || "Usuario")}${badge(p)}</b></div><button class="pcbb" data-act="peerMenu" aria-label="Más opciones"><svg viewBox="0 0 24 24" style="fill:currentColor"><circle cx="12" cy="5" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="12" cy="19" r="2"/></svg></button></div>
+  <div class="pgc pcs"><div class="pcv" style="--h:${hue(p.nombre)}">${foto ? `<div class="pcimg" style="background-image:url('${esc(foto)}')"></div>` : ""}<div class="pcfade"></div></div>
+    <div class="pchead"><div class="pcav">${av(p.nombre, foto, "xl")}</div>
+      <h1>${esc(p.nombre || "Usuario")}${badge(p)}${self ? '<span class="you"> (Tú)</span>' : ""}</h1>
+      ${p.usuario ? `<div class="pcu">@${esc(p.usuario)}</div>` : ""}${rkTag(p)}
+      <div class="pcact"><button data-act="pgBack"><span>${P('<path d="M4 5h16v11H9l-5 4z"/><path d="M8 9.5h8M8 12.5h5"/>')}</span>Mensaje</button><button data-act="peerShare"><span>${P('<path d="M14 4l7 6-7 6v-4c-5 0-8 1.5-10 5 .5-5 3.5-9 10-9z"/>')}</span>Compartir</button><button data-act="peerCopy"><span>${P('<rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/>')}</span>Copiar ID</button></div></div>
+    <div class="pgrp pcg">${info}</div>${soc ? `<div class="pgt">Redes</div><div class="pgrp pcg">${soc}</div>` : ""}
+    <div class="pfoot">Perfil en WarMess · ${esc(p.rango || "Usuario")}</div></div>`;
+}
+function peerScroll(el){
+  const sc = el.querySelector(".pcs"); if(!sc) return;
+  const f = () => { const y = sc.scrollTop, t = Math.max(0, Math.min(1, (y - 90) / 90)); el.style.setProperty("--t", t.toFixed(3)); el.style.setProperty("--sy", Math.min(y, 400) + "px"); el.classList.toggle("tp", t > .6); };
+  sc.addEventListener("scroll", f, { passive:true }); f();
+}
+function peerShare(uid){ const p = peers.get(uid) || {}, tx = `${p.nombre || "Usuario"}${p.usuario ? " (@" + p.usuario + ")" : ""} en WarMess · ID ${p.id || ""}`; if(navigator.share) navigator.share({ title:"WarMess", text:tx }).catch(() => {}); else{ try{ navigator.clipboard.writeText(tx); }catch(e){} toast("Perfil copiado"); } }
 /* --- definición de páginas --- */
 const PG = {
+  peer: (uid) => ({ bare:true, h: peerHTML(uid), after: (el) => peerScroll(el) }),
   settings: () => ({ t:"Ajustes", h:`<button class="pme" data-act="pgGo" data-p="profile">${av(prof.nombre, prof.foto)}<span class="pt"><b>${esc(prof.nombre)}${badge(prof)}</b><small>${esc(prof.bio || "Sin descripción")}</small></span>${CHEV}</button>
     <div class="pgrp">${pgRow(I5.key, "Cuenta", "pgGo", 'data-p="account"', "Contraseña, correo y cuentas")}${pgRow(I5.lock, "Privacidad", "pgGo", 'data-p="privacy"', "Última vez, foto, lectura, grupos")}${pgRow(I5.pal, "Apariencia", "pgGo", 'data-p="look"', "Temas, burbujas, texto y sonidos")}</div>
     <div class="pgrp">${pgRow(I5.plus, "Nuevo grupo", "newGroup", "", "Crea un grupo con @usuario")}${pgRow(I5.grp, "Amigos", "friends", "", friendsList().length + " contacto(s)")}${ginvs.length ? pgRow(I5.up, "Invitaciones a grupos", "pgGo", 'data-p="ginv"', ginvs.length + " pendiente(s)") : ""}${pgRow(I5.star, "Creador de WarMess", "creatorSheet")}</div>
@@ -2448,7 +2526,7 @@ const PG = {
     <div class="pfoot">WarMess · Beta</div>` }),
   profile: () => { const f = (ic, l, v, k, ph) => pgRow(ic, l, "pfEdit", `data-k="${k}"`, v ? esc(v) : `<i>${ph}</i>`);
     return { t:"Perfil", h:`<div class="pavw"><button class="pav" data-act="pgPhoto" aria-label="Cambiar foto">${av(prof.nombre, prof.foto)}<span class="pcam"><svg class="i" viewBox="0 0 24 24">${I5.cam}</svg></span></button></div>
-    <div class="pgrp">${f(I5.user, "Nombre", prof.nombre, "nombre", "Sin nombre")}${f(I5.info, "Info", prof.bio, "bio", "Añadir una descripción")}${f(I5.at, "Nombre de usuario", prof.usuario ? "@" + prof.usuario : "", "usuario", "Elegir")}${f(I5.tel, "Teléfono", prof.wa ? "+" + prof.wa : "", "wa", "Añadir número")}</div>
+    <div class="pgrp">${f(I5.user, "Nombre", prof.nombre, "nombre", "Sin nombre")}${f(I5.info, "Info", prof.bio, "bio", "Añadir una descripción")}${f(I5.at, "Nombre de usuario", prof.usuario ? "@" + prof.usuario : "", "usuario", "Elegir")}${f(I5.tel, "Teléfono · WhatsApp", prof.wa ? "+" + prof.wa : "", "wa", "Añadir número")}</div>
     <div class="pgt">Enlaces</div><div class="pgrp">${f(I5.ig, "Instagram", prof.ig ? "@" + prof.ig : "", "ig", "Añadir Instagram")}${f(I5.link, "Enlace", prof.link, "link", "Añadir enlace")}</div>
     <div class="pgrp">${pgRow(I5.idc, "Tu ID", "copyId", "", esc(prof.id) + " · toca para copiar", "nochev")}</div><div class="pfoot">Tu perfil lo ven las personas con las que chateas, según tus ajustes de privacidad.</div>` }; },
   account: () => { const accs = getAccounts(), pw = user.providerData.some((p) => p.providerId === "password");
@@ -2465,9 +2543,9 @@ const PG = {
   blocked: () => { const l = blockedList();
     return { t:"Contactos bloqueados", h: l.length ? `<div class="pgrp">${l.map((c) => { const p = peers.get(otherOf(c)) || {}; return `<div class="pr">${av(nameOf(c), fotoOf(p))}<span class="pt"><b>${esc(nameOf(c))}</b><small>${p.usuario ? "@" + esc(p.usuario) : ""}</small></span><button class="btn sm ghost" data-act="unblk" data-c="${esc(c.id)}" style="flex:none;margin:0">Desbloquear</button></div>`; }).join("")}</div>` : `<div class="pempty">No tienes contactos bloqueados.</div>` }; },
   look: () => { const th = store.get("wm_theme", "default"), bc = store.get("wm_bme", "#7c4dff"), bs = store.get("wm_bshape", "rd"), fs = store.get("wm_fs", "s"), tn = sndOn() ? String(sndTone()) : "off";
-    const TS = { default:"linear-gradient(135deg,#0a84ff,#08080b)", iosdark:"linear-gradient(135deg,#0a84ff,#000)", ios:"linear-gradient(135deg,#007aff,#fff)", android:"linear-gradient(135deg,#00a884,#0b141a)" };
+    const TS = { default:"linear-gradient(135deg,#0a84ff,#08080b)", iosdark:"linear-gradient(135deg,#0a84ff,#000)", ios:"linear-gradient(135deg,#007aff,#fff)" };
     const chips = (act, cur, arr) => `<div class="chs">${arr.map((x) => `<button class="chb ${cur === x[0] ? "on" : ""}" data-act="${act}" data-v="${x[0]}">${x[1]}</button>`).join("")}</div>`;
-    return { t:"Apariencia", h:`<div class="pgt">Tema</div><div class="pgrp">${THEMES.map((t) => `<button class="pr" data-act="thSet" data-v="${t[0]}"><span class="tsw" style="background:${TS[t[0]]}"></span><span class="pt"><b>${t[1]}</b></span><span class="rb ${th === t[0] ? "on" : ""}"></span></button>`).join("")}</div>
+    return { t:"Apariencia", h:`<div class="pgt">Tema</div><div class="thg">${THEMES.map((t) => `<button class="thc ${th === t[0] ? "on" : ""}" data-act="thSet" data-v="${t[0]}"><span class="thp t-${t[0]}"><i class="b1"></i><i class="b2"></i><i class="b3"></i></span><b>${t[1]}</b><span class="thk"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span></button>`).join("")}</div>
     <div class="pgt">Burbujas de chat</div><div class="pgrp"><div class="prev"><div class="b him">¡Hola! 👋</div><div class="b me">Así se verán tus mensajes</div></div>
       <div class="sws">${BCOLS.map((c) => `<button class="sw ${bc === c[0] ? "on" : ""}" data-act="bubC" data-v="${c[0]}" aria-label="${c[1]}" style="${c[0] ? "background:" + c[0] : ""}">${c[0] ? "" : "<small>Tema</small>"}</button>`).join("")}</div>
       ${chips("bubS", bs, [["rd", "Redonda"], ["soft", "Suave"], ["sq", "Cuadrada"]])}</div>
@@ -2650,7 +2728,7 @@ const A = {
   accept: (t) => answerReq(t.dataset.c, true), reject: (t) => answerReq(t.dataset.c, false),
   connect: (t) => connectSheet(t.dataset.u), sendReq: (t) => sendReq(t.dataset.u),
   back: () => { if(history.state && history.state.wm){ history.back(); } else closeChatUI(); },
-  info: () => (isG(chats.get(cur)) ? groupInfo() : infoSheet()), saveAp: saveApodo, block: () => setBlock(true), unblock: () => setBlock(false), repForm: reportForm, repSend: sendReport,
+  info: () => (isG(chats.get(cur)) ? groupInfo() : pgGo("peer", peerOf())), peerMenu: () => infoSheet(), peerCopy: () => { const u = pgStack.length ? pgStack[pgStack.length - 1].arg : null, p = peers.get(u) || {}; try{ navigator.clipboard.writeText(String(p.id || "")); }catch(e){} toast("ID copiado"); }, peerShare: () => peerShare(pgStack[pgStack.length - 1].arg), saveAp: saveApodo, block: () => setBlock(true), unblock: () => setBlock(false), repForm: reportForm, repSend: sendReport,
   older: () => { msgLimit += 40; olderFlag = true; subMsgs(); },
   admin: () => { if(typeof pgStack !== "undefined" && pgStack.length) pgClear(); openAdmin(); }, admClose, admPin: admPinGo, atab: (t) => setATab(t.dataset.t), auser: (t) => userSheet(t.dataset.u),
   aset: (t) => setEstado(t.dataset.u, t.dataset.s), adel: (t) => delUser(t.dataset.u), repDone: (t) => repSet(t.dataset.r, true), repDel: (t) => repSet(t.dataset.r, false),
