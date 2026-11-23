@@ -2406,9 +2406,9 @@ const lgEv = (a, b) => { try{ logEv(a, b, "", ""); }catch(e){} };
 /* --- apariencia (guardada en este dispositivo) --- */
 const BCOLS = [["", "Tema"], ["#0a84ff", "Azul"], ["#00a884", "Verde"], ["#7c4dff", "Violeta"], ["#e5484d", "Rojo"], ["#f08c00", "Naranja"], ["#d6409f", "Rosa"], ["#3a3a3c", "Gris"]];
 function applyLook(){
-  const h = document.documentElement, c = store.get("wm_bme", "");
+  const h = document.documentElement, c = store.get("wm_bme", "#7c4dff");
   if(/^#[0-9a-f]{6}$/i.test(c)){ h.style.setProperty("--bme", c); h.dataset.bme = "1"; } else{ h.style.removeProperty("--bme"); delete h.dataset.bme; }
-  h.dataset.bshape = store.get("wm_bshape", "rd"); h.dataset.fs = store.get("wm_fs", "m");
+  h.dataset.bshape = store.get("wm_bshape", "rd"); h.dataset.fs = store.get("wm_fs", "s");
 }
 applyLook();
 
@@ -2464,7 +2464,7 @@ const PG = {
     return { t:c.t, h:`<div class="pgt">${c.d}</div><div class="pgrp">${c.o.map((o) => `<button class="pr" data-act="privSet" data-k="${a.k}" data-v="${o[0]}"><span class="pt"><b>${o[1]}</b>${o[2] ? `<small>${o[2]}</small>` : ""}</span><span class="rb ${q === o[0] ? "on" : ""}"></span></button>`).join("")}</div>` }; },
   blocked: () => { const l = blockedList();
     return { t:"Contactos bloqueados", h: l.length ? `<div class="pgrp">${l.map((c) => { const p = peers.get(otherOf(c)) || {}; return `<div class="pr">${av(nameOf(c), fotoOf(p))}<span class="pt"><b>${esc(nameOf(c))}</b><small>${p.usuario ? "@" + esc(p.usuario) : ""}</small></span><button class="btn sm ghost" data-act="unblk" data-c="${esc(c.id)}" style="flex:none;margin:0">Desbloquear</button></div>`; }).join("")}</div>` : `<div class="pempty">No tienes contactos bloqueados.</div>` }; },
-  look: () => { const th = store.get("wm_theme", "default"), bc = store.get("wm_bme", ""), bs = store.get("wm_bshape", "rd"), fs = store.get("wm_fs", "m"), tn = sndOn() ? String(sndTone()) : "off";
+  look: () => { const th = store.get("wm_theme", "default"), bc = store.get("wm_bme", "#7c4dff"), bs = store.get("wm_bshape", "rd"), fs = store.get("wm_fs", "s"), tn = sndOn() ? String(sndTone()) : "off";
     const TS = { default:"linear-gradient(135deg,#0a84ff,#08080b)", iosdark:"linear-gradient(135deg,#0a84ff,#000)", ios:"linear-gradient(135deg,#007aff,#fff)", android:"linear-gradient(135deg,#00a884,#0b141a)" };
     const chips = (act, cur, arr) => `<div class="chs">${arr.map((x) => `<button class="chb ${cur === x[0] ? "on" : ""}" data-act="${act}" data-v="${x[0]}">${x[1]}</button>`).join("")}</div>`;
     return { t:"Apariencia", h:`<div class="pgt">Tema</div><div class="pgrp">${THEMES.map((t) => `<button class="pr" data-act="thSet" data-v="${t[0]}"><span class="tsw" style="background:${TS[t[0]]}"></span><span class="pt"><b>${t[1]}</b></span><span class="rb ${th === t[0] ? "on" : ""}"></span></button>`).join("")}</div>
